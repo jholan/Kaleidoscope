@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="General">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{eb8a2dd5-2469-40a4-917b-899778139199}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Math\Vectors.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathUtils.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Types.hpp" />
+    <ClInclude Include="Math\Vectors\IVec2.hpp" />
+    <ClInclude Include="Math\Vectors\IVec2InlineImplementation.hpp" />
+    <ClInclude Include="Math\Vectors\IVec3.hpp" />
+    <ClInclude Include="Math\Vectors\IVec3InlineImplementation.hpp" />
+    <ClInclude Include="Math\Vectors\IVec4.hpp" />
+    <ClInclude Include="Math\Vectors\IVec4InlineImplementation.hpp" />
+    <ClInclude Include="Math\Vectors\Vec2.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors\Vec2InlineImplementation.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors\Vec3.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors\Vec3InlineImplementation.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors\Vec4.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors\Vec4InlineImplementation.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\WindowsLean.hpp" />
+    <ClInclude Include="Core\TypedProperties.hpp" />
+    <ClInclude Include="Rendering\RGBA.hpp" />
+    <ClInclude Include="Core\TypedPropertiesInlineImplementation.hpp" />
+    <ClInclude Include="Events\EventSystem.hpp" />
+    <ClInclude Include="Async\Thread.hpp" />
+    <ClInclude Include="Async\Mutex.hpp" />
+    <ClInclude Include="Async\ReaderWriterMutex.hpp" />
+    <ClInclude Include="Async\Containers\ThreadSafeQueue.hpp" />
+    <ClInclude Include="Async\Containers\ThreadSafeQueueInlineImplementation.hpp" />
+    <ClInclude Include="Jobs\JobSystem.hpp" />
+    <ClInclude Include="Core\BitSet.hpp" />
+    <ClInclude Include="Core\BitSetInlineImplementation.hpp" />
+    <ClInclude Include="Events\EventSystemInlineImplementation.hpp" />
+    <ClInclude Include="Math\Matrix.hpp" />
+    <ClInclude Include="Math\Primitives\Plane.hpp" />
+    <ClInclude Include="Core\ErrorWarningAssert.hpp" />
+    <ClInclude Include="Strings\StringUtils.hpp" />
+    <ClInclude Include="Math\Primitives\Ray.hpp" />
+    <ClInclude Include="Math\Primitives\Sphere.hpp" />
+    <ClInclude Include="Math\Primitives\Triangle.hpp" />
+    <ClInclude Include="Math\Primitives\Circle.hpp" />
+    <ClInclude Include="Math\Primitives\PrimitiveIntersections.hpp" />
+    <ClInclude Include="Math\Primitives.hpp" />
+    <ClInclude Include="Math\Primitives\AABB.hpp" />
+    <ClInclude Include="__Control\__Control.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Math\MathUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\RGBA.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Async\Thread.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Async\Mutex.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Async\ReaderWriterMutex.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Jobs\JobSystem.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Matrix.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\Plane.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ErrorWarningAssert.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Strings\StringUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\Ray.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\Sphere.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\Triangle.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\Circle.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Primitives\AABB.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
