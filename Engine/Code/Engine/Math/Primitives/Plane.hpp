@@ -7,9 +7,11 @@
 class Plane
 {
 public:
+	// Composition
 	Plane(const vec3& normal, float signedDistance);
 	Plane(const vec3& a, const vec3& b, const vec3& c);  // CCW
 
+	// Properties
 	vec3	GetNormal() const;
 	float	GetSignedDistance() const;
 

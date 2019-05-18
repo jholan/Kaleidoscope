@@ -7,15 +7,19 @@
 class AABB
 {
 public:
+	// Composition
 	AABB(const vec3& mins, const vec3& maxs);
 
+	// Positions
 	vec3 GetCenter() const;
 	vec3 GetMins() const;
 	vec3 GetMaxs() const;
 	
+	// Dimensions
 	vec3 GetHalfDim() const;
 	vec3 GetDim() const;
 
+	// Expansion
 	void GrowToFit(const vec3& point);
 
 

@@ -7,6 +7,7 @@
 class Triangle
 {
 public:
+	// Composition
 	Triangle(const vec2& a, const vec2& b, const vec2& c);
 	Triangle(const vec3& a, const vec3& b, const vec3& c);
 

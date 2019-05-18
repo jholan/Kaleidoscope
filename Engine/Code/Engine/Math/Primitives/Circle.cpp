@@ -2,6 +2,9 @@
 
 
 
+// -----------------------------------------------------------------
+// Composition
+// -----------------------------------------------------------------
 Circle::Circle(const vec2& center, float radius)
 {
 	m_center = center;
@@ -9,6 +12,10 @@ Circle::Circle(const vec2& center, float radius)
 }
 
 
+
+// -----------------------------------------------------------------
+// Properties
+// -----------------------------------------------------------------
 vec2 Circle::GetCenter() const
 {
 	return m_center;
@@ -21,6 +28,10 @@ float Circle::GetRadius() const
 }
 
 
+
+// -----------------------------------------------------------------
+// Expansion
+// -----------------------------------------------------------------
 void Circle::GrowToFit(const vec2& point)
 {
 	vec2 toPoint = point - GetCenter();
@@ -29,6 +40,10 @@ void Circle::GrowToFit(const vec2& point)
 }
 
 
+
+// -----------------------------------------------------------------
+// Circle Utils
+// -----------------------------------------------------------------
 Circle Interpolate(const Circle& start, const Circle& end, float t)
 {
 	vec2 lerpedCenter = Interpolate(start.GetCenter(), end.GetCenter(), t);

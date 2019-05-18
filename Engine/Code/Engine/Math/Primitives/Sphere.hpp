@@ -7,11 +7,14 @@
 class Sphere
 {
 public:
+	// Composition
 	Sphere(const vec3& center, float radius);
 
+	// Properties
 	vec3 GetCenter() const;
 	float GetRadius() const;
 
+	// Expansion
 	void GrowToFit(const vec3& point);
 
 

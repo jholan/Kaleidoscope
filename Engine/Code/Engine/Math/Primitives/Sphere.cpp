@@ -2,6 +2,9 @@
 
 
 
+// -----------------------------------------------------------------
+// Composition
+// -----------------------------------------------------------------
 Sphere::Sphere(const vec3& center, float radius)
 {
 	m_center = center;
@@ -9,6 +12,10 @@ Sphere::Sphere(const vec3& center, float radius)
 }
 
 
+
+// -----------------------------------------------------------------
+// Properties
+// -----------------------------------------------------------------
 vec3 Sphere::GetCenter() const
 {
 	return m_center;
@@ -21,6 +28,10 @@ float Sphere::GetRadius() const
 }
 
 
+
+// -----------------------------------------------------------------
+// Expansion
+// -----------------------------------------------------------------
 void Sphere::GrowToFit(const vec3& point)
 {
 	vec3 toPoint = point - GetCenter();
@@ -29,6 +40,10 @@ void Sphere::GrowToFit(const vec3& point)
 }
 
 
+
+// -----------------------------------------------------------------
+// Sphere Utils
+// -----------------------------------------------------------------
 Sphere Interpolate(const Sphere& start, const Sphere& end, float t)
 {
 	vec3 lerpedCenter = Interpolate(start.GetCenter(), end.GetCenter(), t);

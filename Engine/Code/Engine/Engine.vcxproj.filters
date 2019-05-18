@@ -67,6 +67,7 @@
     <ClInclude Include="Math\Primitives.hpp" />
     <ClInclude Include="Math\Primitives\AABB.hpp" />
     <ClInclude Include="__Control\__Control.hpp" />
+    <ClInclude Include="Core\String.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -112,6 +113,9 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Math\Primitives\AABB.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\String.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,6 +2,9 @@
 
 
 
+// -----------------------------------------------------------------
+// Composition
+// -----------------------------------------------------------------
 Plane::Plane(const vec3& normal, float signedDistance)
 {
 	m_normal = normal;
@@ -16,6 +19,10 @@ Plane::Plane(const vec3& a, const vec3& b, const vec3& c)
 }
 
 
+
+// -----------------------------------------------------------------
+// Properties
+// -----------------------------------------------------------------
 vec3 Plane::GetNormal() const
 {
 	return m_normal;
@@ -28,6 +35,10 @@ float Plane::GetSignedDistance() const
 }
 
 
+
+// -----------------------------------------------------------------
+// Plane Utils
+// -----------------------------------------------------------------
 Plane Interpolate(const Plane& start, const Plane& end, float t)
 {
 	vec3 lerpedNormal = Interpolate(start.m_normal, end.m_normal, t);

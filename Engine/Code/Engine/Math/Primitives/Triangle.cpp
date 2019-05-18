@@ -2,6 +2,9 @@
 
 
 
+// -----------------------------------------------------------------
+// Composition
+// -----------------------------------------------------------------
 Triangle::Triangle(const vec2& a, const vec2& b, const vec2& c)
 {
 	m_a = vec3(a, 0.0f);
@@ -18,6 +21,10 @@ Triangle::Triangle(const vec3& a, const vec3& b, const vec3& c)
 }
 
 
+
+// -----------------------------------------------------------------
+// Triangle Utils
+// -----------------------------------------------------------------
 Triangle Interpolate(const Triangle& start, const Triangle& end, float t)
 {
 	vec3 lerpedA = Interpolate(start.m_a, end.m_a, t);

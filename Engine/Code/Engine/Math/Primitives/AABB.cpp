@@ -2,6 +2,9 @@
 
 
 
+// -----------------------------------------------------------------
+// Composition
+// -----------------------------------------------------------------
 AABB::AABB(const vec3& mins, const vec3& maxs)
 {
 	m_mins = Min(mins, maxs);
@@ -9,6 +12,10 @@ AABB::AABB(const vec3& mins, const vec3& maxs)
 }
 
 
+
+// -----------------------------------------------------------------
+// Positions
+// -----------------------------------------------------------------
 vec3 AABB::GetCenter() const
 {
 	vec3 center = GetMins() + GetHalfDim();
@@ -28,6 +35,10 @@ vec3 AABB::GetMaxs() const
 }
 
 
+
+// -----------------------------------------------------------------
+// Dimensions
+// -----------------------------------------------------------------
 vec3 AABB::GetHalfDim() const
 {
 	vec3 dim = GetDim();
@@ -43,6 +54,10 @@ vec3 AABB::GetDim() const
 }
 
 
+
+// -----------------------------------------------------------------
+// Expansion
+// -----------------------------------------------------------------
 void AABB::GrowToFit(const vec3& point)
 {
 	m_maxs = Max(m_maxs, point);
@@ -50,6 +65,10 @@ void AABB::GrowToFit(const vec3& point)
 }
 
 
+
+// -----------------------------------------------------------------
+// Static Composition Utils
+// -----------------------------------------------------------------
 AABB AABB::FromMinMax(const vec3& mins, const vec3& maxs)
 {
 	AABB aabb = AABB(mins, maxs);
@@ -84,6 +103,10 @@ AABB AABB::FromMinDim(const vec3& mins, const vec3& dim)
 }
 
 
+
+// -----------------------------------------------------------------
+// AABB Utils
+// -----------------------------------------------------------------
 AABB Interpolate(const AABB& start, const AABB& end, float t)
 {
 	vec3 lerpedMins = Interpolate(start.GetMins(), end.GetMins(), t);

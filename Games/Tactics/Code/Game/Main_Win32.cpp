@@ -4,10 +4,11 @@
 
 #include "Engine/Core/WindowsLean.hpp"
 
-#include "Engine/Core/TypedProperties.hpp"
+#include "Engine/Core/String.hpp"
 #include "Engine/Core/BitSet.hpp"
 #include "Engine/Math/Vectors.hpp"
 #include "Engine/Math/Matrix.hpp"
+#include "Engine/Core/TypedProperties.hpp"
 
 #include "Engine/Events/EventSystem.hpp"
 
@@ -38,14 +39,26 @@ public:
 };
 
 
+
 //-----------------------------------------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR commandLineString, int)
 {
+
+	String s = String("test");
+	static String testString = "test";
+	if (s == testString)
+	{
+		int k = 10;
+	}
+
+
+
+
 	mat4 Ry_90 = mat4::CreateRotationYDegrees(90.0f);
 	vec4 p = vec4(1.0f, 0.0f, 0.0f, 0.0f);
 	vec4 p2 = Mul(Ry_90, p);
 
-
+	int xkz = 5;
 
 
 
