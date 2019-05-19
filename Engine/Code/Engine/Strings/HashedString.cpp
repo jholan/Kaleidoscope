@@ -1,4 +1,4 @@
-#include "Engine/Core/String.hpp"
+#include "Engine/Strings/HashedString.hpp"
 
 #include <cctype>
 
@@ -10,21 +10,21 @@
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
-String::String()
+HashedString::HashedString()
 {
 	m_stdString = "";
 	m_hash = 0;
 }
 
 
-String::String(const std::string& stdString)
+HashedString::HashedString(const std::string& stdString)
 {
 	m_stdString = stdString;
 	m_hash = GenerateHash(m_stdString);
 }
 
 
-String::String(const char* cString)
+HashedString::HashedString(const char* cString)
 {
 	m_stdString = cString;
 	m_hash = GenerateHash(m_stdString);
@@ -35,7 +35,7 @@ String::String(const char* cString)
 // -----------------------------------------------------------------
 // Hash
 // -----------------------------------------------------------------
-ulonglong String::GetHash() const
+ulonglong HashedString::GetHash() const
 {
 	return m_hash;
 }
@@ -45,13 +45,13 @@ ulonglong String::GetHash() const
 // -----------------------------------------------------------------
 // Base String
 // -----------------------------------------------------------------
-const char* String::GetCString() const
+const char* HashedString::GetCString() const
 {
 	return m_stdString.c_str();
 }
 
 
-const std::string& String::GetStdString() const
+const std::string& HashedString::GetStdString() const
 {
 	return m_stdString;
 }
@@ -61,7 +61,7 @@ const std::string& String::GetStdString() const
 // -----------------------------------------------------------------
 // Operators
 // -----------------------------------------------------------------
-bool String::operator<(const String& rhs) const
+bool HashedString::operator<(const HashedString& rhs) const
 {
 	ulonglong lhsHash = GetHash();
 	ulonglong rhsHash = rhs.GetHash();
@@ -73,17 +73,17 @@ bool String::operator<(const String& rhs) const
 	else
 	{
 #ifdef STRING_HASH_SAFETY
-	if (lhsHash == rhsHash)
-	{
-		GUARANTEE_OR_DIE(CompareStringsCaseInsensitive(GetCString(), rhs.GetCString()) == true, "Bad string hash");
-	}
+		if (lhsHash == rhsHash)
+		{
+			GUARANTEE_OR_DIE(CompareStringsCaseInsensitive(GetCString(), rhs.GetCString()) == true, "Bad string hash");
+		}
 #endif
 		return false;
 	}
 }
 
 
-bool String::operator==(const String& rhs) const
+bool HashedString::operator==(const HashedString& rhs) const
 {
 	ulonglong lhsHash = GetHash();
 	ulonglong rhsHash = rhs.GetHash();
@@ -106,14 +106,14 @@ bool String::operator==(const String& rhs) const
 // -----------------------------------------------------------------
 // Hash Generation
 // -----------------------------------------------------------------
-ulonglong String::GenerateHash(const std::string& stdString)
+ulonglong HashedString::GenerateHash(const std::string& stdString)
 {
 	ulonglong hash = GenerateHash(stdString.c_str());
 	return hash;
 }
 
 
-ulonglong String::GenerateHash(const char* cString)
+ulonglong HashedString::GenerateHash(const char* cString)
 {
 	ulonglong hash = 0;
 

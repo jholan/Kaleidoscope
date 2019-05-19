@@ -4,7 +4,7 @@
 
 #include "Engine/Core/WindowsLean.hpp"
 
-#include "Engine/Core/String.hpp"
+#include "Engine/Strings/HashedString.hpp"
 #include "Engine/Core/BitSet.hpp"
 #include "Engine/Math/Vectors.hpp"
 #include "Engine/Math/Matrix.hpp"
@@ -44,8 +44,8 @@ public:
 int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR commandLineString, int)
 {
 
-	String s = String("test");
-	static String testString = "test";
+	HashedString s = HashedString("test");
+	static HashedString testString = "test";
 	if (s == testString)
 	{
 		int k = 10;

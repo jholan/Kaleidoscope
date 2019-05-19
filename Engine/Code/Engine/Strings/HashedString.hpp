@@ -10,13 +10,13 @@
 // In __Control there is the constant STRING_HASH_SAFETY which adds an additional
 //	 comparison for hashes that match. This is useful in a debug setup to help prevent 
 //	 collisions but should be turned off in shipping builds.
-class String
+class HashedString
 {
 public:
 	//Composition
-	String();
-	String(const std::string& stdString);
-	String(const char* cString);
+	HashedString();
+	HashedString(const std::string& stdString);
+	HashedString(const char* cString);
 
 	// Hash
 	ulonglong			GetHash() const;
@@ -26,8 +26,8 @@ public:
 	const std::string&	GetStdString() const;
 
 	// Operators
-	bool operator<(const String& rhs) const;
-	bool operator==(const String& rhs) const;
+	bool operator<(const HashedString& rhs) const;
+	bool operator==(const HashedString& rhs) const;
 
 
 

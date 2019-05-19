@@ -167,7 +167,6 @@
     <ClInclude Include="Core\BitSet.hpp" />
     <ClInclude Include="Core\BitSetInlineImplementation.hpp" />
     <ClInclude Include="Core\ErrorWarningAssert.hpp" />
-    <ClInclude Include="Core\String.hpp" />
     <ClInclude Include="Core\TypedProperties.hpp" />
     <ClInclude Include="Core\TypedPropertiesInlineImplementation.hpp" />
     <ClInclude Include="Core\Types.hpp" />
@@ -199,6 +198,7 @@
     <ClInclude Include="Math\Vectors\Vec4InlineImplementation.hpp" />
     <ClInclude Include="Math\Vectors.hpp" />
     <ClInclude Include="Rendering\RGBA.hpp" />
+    <ClInclude Include="Strings\HashedString.hpp" />
     <ClInclude Include="Strings\StringUtils.hpp" />
     <ClInclude Include="__Control\__Control.hpp" />
   </ItemGroup>
@@ -207,7 +207,6 @@
     <ClCompile Include="Async\ReaderWriterMutex.cpp" />
     <ClCompile Include="Async\Thread.cpp" />
     <ClCompile Include="Core\ErrorWarningAssert.cpp" />
-    <ClCompile Include="Core\String.cpp" />
     <ClCompile Include="Jobs\JobSystem.cpp" />
     <ClCompile Include="Math\MathUtils.cpp" />
     <ClCompile Include="Math\Matrix.cpp" />
@@ -218,6 +217,7 @@
     <ClCompile Include="Math\Primitives\Sphere.cpp" />
     <ClCompile Include="Math\Primitives\Triangle.cpp" />
     <ClCompile Include="Rendering\RGBA.cpp" />
+    <ClCompile Include="Strings\HashedString.cpp" />
     <ClCompile Include="Strings\StringUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
