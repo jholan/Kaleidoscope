@@ -4,6 +4,7 @@
 
 #include "Engine/__Control/__Control.hpp"
 #include "Engine/Core/ErrorWarningAssert.hpp"
+#include "Engine/Strings/StringUtils.hpp"
 
 
 
@@ -127,59 +128,4 @@ ulonglong HashedString::GenerateHash(const char* cString)
 	}
 
 	return hash;
-}
-
-
-
-// -----------------------------------------------------------------
-// String Utils
-// -----------------------------------------------------------------
-char ToLower(char c)
-{
-	char lower = (char)tolower(c);
-	return lower;
-}
-
-
-std::string ToLower(const std::string& string)
-{
-	std::string lowerString;
-	lowerString.reserve(string.size());
-
-	for (int i = 0; i < (int)string.size(); ++i)
-	{
-		lowerString.push_back(ToLower(string[i]));
-	}
-
-	return lowerString;
-}
-
-
-bool CompareStringsCaseInsensitive(const std::string& lhs, const std::string& rhs)
-{
-	return CompareStringsCaseInsensitive(lhs.c_str(), rhs.c_str());
-}
-
-
-bool CompareStringsCaseInsensitive(const char* lhs, const char* rhs)
-{
-	bool stringsAreTheSame = true;
-
-	const char* string1Iter = lhs;
-	const char* string2Iter = rhs;
-	while( (*string1Iter != 0) && (*string2Iter != 0) )
-	{
-		char lowerChar1 = (char)tolower(*string1Iter);
-		char lowerChar2 = (char)tolower(*string2Iter);
-		if (lowerChar1 != lowerChar2)
-		{
-			stringsAreTheSame = false;
-			break;
-		}
-
-		++string1Iter;
-		++string2Iter;
-	}
-
-	return stringsAreTheSame;
 }

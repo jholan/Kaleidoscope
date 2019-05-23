@@ -4,11 +4,14 @@
 
 #include "Engine/Core/WindowsLean.hpp"
 
-#include "Engine/Strings/HashedString.hpp"
 #include "Engine/Core/BitSet.hpp"
+#include "Engine/Core/TypedProperties.hpp"
+
+#include "Engine/Strings/HashedString.hpp"
+#include "Engine/Strings/StringUtils.hpp"
+
 #include "Engine/Math/Vectors.hpp"
 #include "Engine/Math/Matrix.hpp"
-#include "Engine/Core/TypedProperties.hpp"
 
 #include "Engine/Events/EventSystem.hpp"
 
@@ -51,6 +54,44 @@ int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR command
 		int k = 10;
 	}
 
+
+	if (CompareStringsCaseInsensitive("help", "HELP"))
+	{
+		int i = 5;
+	}
+
+	bool bs = StringToBool("False");
+	bs = StringToBool("false");
+	bs = StringToBool("FALSE");
+	bs = StringToBool("true");
+	bs = StringToBool("True");
+	bs = StringToBool("TRUE");
+	
+	int is = StringToInt("15");
+	is = StringToInt("-15");
+	is = StringToInt("0");
+	is = StringToInt("   67");
+	is = StringToInt("- 15");
+
+	float fs = StringToFloat("15");
+	fs = StringToFloat("-15");
+	fs = StringToFloat("0");
+	fs = StringToFloat("   67");
+	fs = StringToFloat("- 15");
+	fs = StringToFloat("15.0f");
+	fs = StringToFloat("12.2345");
+	fs = StringToFloat("-16.1234f");
+
+
+	std::vector<float> vvals = ParseCSVtoFloats("10.0f, 16.0f, 7");
+
+
+	std::string ts = "      help";
+	ts = TrimWhitespaceFromFront(ts);
+	ts = TrimWhitespaceFromBack(ts);
+
+	ts = "   help    ";
+	ts = TrimWhitespaceFromBack(ts);
 
 
 

@@ -41,11 +41,3 @@ private:
 	std::string m_stdString;
 	ulonglong	m_hash;
 };
-
-
-
-char		ToLower(char c);
-std::string ToLower(const std::string& string);
-
-bool		CompareStringsCaseInsensitive(const std::string& lhs, const std::string& rhs);
-bool		CompareStringsCaseInsensitive(const char* lhs, const char* rhs);

@@ -68,6 +68,7 @@
     <ClInclude Include="Math\Primitives\AABB.hpp" />
     <ClInclude Include="__Control\__Control.hpp" />
     <ClInclude Include="Strings\HashedString.hpp" />
+    <ClInclude Include="Core\EngineCommon.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">

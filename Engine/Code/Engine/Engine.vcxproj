@@ -166,6 +166,7 @@
     <ClInclude Include="Async\Thread.hpp" />
     <ClInclude Include="Core\BitSet.hpp" />
     <ClInclude Include="Core\BitSetInlineImplementation.hpp" />
+    <ClInclude Include="Core\EngineCommon.hpp" />
     <ClInclude Include="Core\ErrorWarningAssert.hpp" />
     <ClInclude Include="Core\TypedProperties.hpp" />
     <ClInclude Include="Core\TypedPropertiesInlineImplementation.hpp" />
