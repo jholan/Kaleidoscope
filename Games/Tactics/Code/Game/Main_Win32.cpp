@@ -4,6 +4,7 @@
 
 #include "Engine/Core/WindowsLean.hpp"
 
+#include "Engine/Core/EngineCommon.hpp"
 #include "Engine/Core/BitSet.hpp"
 #include "Engine/Core/TypedProperties.hpp"
 
@@ -20,6 +21,10 @@
 #include "Engine/Jobs/JobSystem.hpp"
 
 #include "Engine/Rendering/RGBA.hpp"
+
+#include "Game/App/AppCommon.hpp"
+#include "Game/App/App.hpp"
+
 
 
 
@@ -46,7 +51,6 @@ public:
 //-----------------------------------------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR commandLineString, int)
 {
-
 	HashedString s = HashedString("test");
 	static HashedString testString = "test";
 	if (s == testString)
@@ -143,6 +147,16 @@ int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR command
 	int* ivalsOut			= props.Get("ivals", nullptr);
 	ivalsOut				= props.Get<int*>("ivals", nullptr);
 	float floatVal			= props.Get("floatVal", 5.0f);
+
+
+
+	UNUSED(applicationInstanceHandle);
+	UNUSED(commandLineString);
+
+	g_theApp = new App();
+	g_theApp->Initialize();
+	g_theApp->RunInternalLoop();
+	g_theApp->Destroy();
 
 	return 0;
 }
