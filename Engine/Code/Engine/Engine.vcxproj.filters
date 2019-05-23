@@ -69,6 +69,8 @@
     <ClInclude Include="__Control\__Control.hpp" />
     <ClInclude Include="Strings\HashedString.hpp" />
     <ClInclude Include="Core\EngineCommon.hpp" />
+    <ClInclude Include="Time\Clock.hpp" />
+    <ClInclude Include="Time\TimeUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -117,6 +119,12 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Strings\HashedString.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Clock.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\TimeUtils.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>
