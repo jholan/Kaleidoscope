@@ -71,6 +71,7 @@
     <ClInclude Include="Core\EngineCommon.hpp" />
     <ClInclude Include="Time\Clock.hpp" />
     <ClInclude Include="Time\TimeUtils.hpp" />
+    <ClInclude Include="Time\Stopwatch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -125,6 +126,9 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Time\TimeUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Time\Stopwatch.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>
