@@ -4,6 +4,7 @@
 #include <string>
 #include <typeinfo>
 
+class HashedString;
 class TypedPropertyBase;
 
 
@@ -11,21 +12,29 @@ class TypedPropertyBase;
 class TypedProperties
 {
 public:
+	// Composition
 	TypedProperties();
+	inline TypedProperties(const TypedProperties& other);
 	inline ~TypedProperties();
 
-	template <typename t>
-	void Set(const std::string& key, const t& value);
-	inline void Set(const std::string& key, const char* value);
+	inline void operator=(const TypedProperties& copyFrom);
 
+
+	// Set value
 	template <typename t>
-	t Get(const std::string& key, const t& defaultValue);
-	inline std::string Get(const std::string& key, const char* defaultValue);
+	void Set(const HashedString& key, const t& value);
+	inline void Set(const HashedString& key, const char* value); // We want c strings to parse to strings
+
+
+	// Get Value
+	template <typename t>
+	t Get(const HashedString& key, const t& defaultValue);
+	inline std::string Get(const HashedString& key, const char* defaultValue); // We want c strings to parse to strings
 
 
 
 private:
-	std::map<std::string, TypedPropertyBase*> m_properties;
+	std::map<HashedString, TypedPropertyBase*> m_properties;
 };
 
 

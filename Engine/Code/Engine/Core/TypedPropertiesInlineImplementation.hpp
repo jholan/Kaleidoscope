@@ -1,5 +1,7 @@
 #include "Engine/Core/TypedProperties.hpp"
 
+#include "Engine/Strings/HashedString.hpp"
+
 
 
 // -----------------------------------------------------------------
@@ -10,6 +12,8 @@ class TypedPropertyBase
 public:
 	TypedPropertyBase() {};
 	virtual ~TypedPropertyBase() {};
+
+	virtual TypedPropertyBase* Clone() const = 0;
 
 	virtual size_t GetHashCode() const = 0;
 };
@@ -22,13 +26,21 @@ public:
 	TypedProperty(t value)							: m_value(value), m_hashCode(typeid(t).hash_code()) {};
 	virtual size_t GetHashCode() const override		{return m_hashCode;};
 	t GetValue() const								{return m_value;};
-
+	inline virtual TypedPropertyBase* Clone() const override;
 
 
 private:
 	t		m_value;
 	size_t	m_hashCode;
 };
+
+
+template <typename t>
+TypedPropertyBase* TypedProperty<t>::Clone() const
+{
+	TypedProperty<t>* cloned = new TypedProperty<t>(GetValue());
+	return (TypedPropertyBase*)cloned;
+}
 
 
 
@@ -42,6 +54,16 @@ TypedProperties::TypedProperties()
 }
 
 
+TypedProperties::TypedProperties(const TypedProperties& other)
+{
+	for (auto iter = other.m_properties.begin(); iter != other.m_properties.end(); ++iter)
+	{
+		TypedPropertyBase* property = iter->second;
+		m_properties[iter->first] = property->Clone();
+	}
+}
+
+
 TypedProperties::~TypedProperties()
 {
 	for (auto iter = m_properties.begin(); iter != m_properties.end(); ++iter)
@@ -52,12 +74,22 @@ TypedProperties::~TypedProperties()
 }
 
 
+void TypedProperties::operator=(const TypedProperties& copyFrom)
+{
+	for (auto iter = copyFrom.m_properties.begin(); iter != copyFrom.m_properties.end(); ++iter)
+	{
+		TypedPropertyBase* property = iter->second;
+		m_properties[iter->first] = property->Clone();
+	}
+}
+
+
 
 // -----------------------------------------------------------------
 // Set
 // -----------------------------------------------------------------
 template <typename t>
-void TypedProperties::Set(const std::string& key, const t& value)
+void TypedProperties::Set(const HashedString& key, const t& value)
 {
 	auto searchIter = m_properties.find(key);
 	if (searchIter != m_properties.end())
@@ -69,7 +101,7 @@ void TypedProperties::Set(const std::string& key, const t& value)
 }
 
 
-void TypedProperties::Set(const std::string& key, const char* value)
+void TypedProperties::Set(const HashedString& key, const char* value)
 {
 	Set(key, std::string(value));
 }
@@ -80,7 +112,7 @@ void TypedProperties::Set(const std::string& key, const char* value)
 // Get
 // -----------------------------------------------------------------
 template <typename t>
-t TypedProperties::Get(const std::string& key, const t& defaultValue)
+t TypedProperties::Get(const HashedString& key, const t& defaultValue)
 {
 	// SHORT CIRCUIT
 	auto searchIter = m_properties.find(key);
@@ -103,7 +135,7 @@ t TypedProperties::Get(const std::string& key, const t& defaultValue)
 }
 
 
-std::string TypedProperties::Get(const std::string& key, const char* defaultValue)
+std::string TypedProperties::Get(const HashedString& key, const char* defaultValue)
 {
 	// SHORT CIRCUIT
 	auto searchIter = m_properties.find(key);

@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Async\Atomic.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueue.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueueInlineImplementation.hpp" />
     <ClInclude Include="Async\Mutex.hpp" />

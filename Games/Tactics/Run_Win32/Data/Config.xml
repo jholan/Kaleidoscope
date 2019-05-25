@@ -1,0 +1,14 @@
+<!-- 
+	Key
+	[] 			- Required params
+	key:type
+	||			- Optional param list, favors left to right
+-->
+<Config>
+
+	<Window>
+		<AppName value="Tactics" />					<!-- [value:string] 								The name in the upper left of the window -->
+		<Resolution width="1920" height="1080" /> 	<!-- [height:int [aspect:int:int || width:int]] 	Height is required, EITHER width or aspect must also be specified, aspect is favored over width -->
+	</Window>
+
+</Config>

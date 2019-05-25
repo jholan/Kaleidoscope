@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 
+class HashedString;
 class TypedProperties;
 class SubscriberListingBase;
 
@@ -15,16 +16,32 @@ typedef bool(*EventCallback)(TypedProperties& args);
 class EventSystem
 {
 public:
-	void FireEvent(const std::string& name, TypedProperties& args);
-	void SubscribeEventCallbackFunction(const std::string& eventName, EventCallback callback);
-	
+	// Composition
+	EventSystem();
+	~EventSystem();
+
+
+	// Fire Event
+	inline void FireEvent(const HashedString& name, TypedProperties& args);
+	inline void FireEvent(const HashedString& name);
+
+
+	// C Functions
+	inline void SubscribeEventCallbackFunction(const HashedString& eventName, EventCallback callback);
+	inline void UnsubscribeEventCallbackFunction(const HashedString& eventName, EventCallback callback);
+
+
+	// Member Functions
 	template<typename t, typename dummy>
-	void SubscribeEventCallbackMemberFunction(const std::string& eventName, t* user, dummy memberCallback);
+	inline void SubscribeEventCallbackMemberFunction(const HashedString& eventName, t* user, dummy memberCallback);
+
+	template<typename t, typename dummy>
+	inline void UnsubscribeEventCallbackFunction(const HashedString& eventName, t* user, dummy memberCallback);
 
 
 
 private:
-	std::map<std::string, std::vector<SubscriberListingBase*> > m_callbacks;
+	std::map<HashedString, std::vector<SubscriberListingBase*> > m_callbacks;
 };
 
 

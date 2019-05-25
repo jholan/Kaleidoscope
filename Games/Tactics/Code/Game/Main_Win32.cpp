@@ -47,6 +47,19 @@ public:
 };
 
 
+bool TestEventSystemFunc(TypedProperties& args)
+{
+	float health = 100.0f;
+	int intellect = 7;
+
+	TypedProperties props;
+	props = args.Get("props", props);
+	health = props.Get("health", health);
+	intellect = props.Get("int", intellect);
+
+	return false;
+}
+
 
 //-----------------------------------------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR commandLineString, int)
@@ -108,15 +121,15 @@ int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR command
 
 
 
-	TestClass tc;
-
-	EventSystem es;
-	es.SubscribeEventCallbackFunction("Sunrise", EventTest);
-	es.SubscribeEventCallbackMemberFunction("Sunrise", &tc, &TestClass::TestMemberFunction);
-
-	TypedProperties args;
-	args.Set("intVal", 15);
-	es.FireEvent("Sunrise", args);
+	//TestClass tc;
+	//
+	//EventSystem es;
+	//es.SubscribeEventCallbackFunction("Sunrise", EventTest);
+	//es.SubscribeEventCallbackMemberFunction("Sunrise", &tc, &TestClass::TestMemberFunction);
+	//
+	//TypedProperties args;
+	//args.Set("intVal", 15);
+	//es.FireEvent("Sunrise", args);
 
 
 
@@ -147,6 +160,19 @@ int WINAPI WinMain(HINSTANCE applicationInstanceHandle, HINSTANCE, LPSTR command
 	int* ivalsOut			= props.Get("ivals", nullptr);
 	ivalsOut				= props.Get<int*>("ivals", nullptr);
 	float floatVal			= props.Get("floatVal", 5.0f);
+
+
+
+	EventSystem es = EventSystem();
+	es.SubscribeEventCallbackFunction("TestFire", TestEventSystemFunc);
+
+	TypedProperties args;
+	TypedProperties eprops;
+	eprops.Set("health", 67.123f);
+	eprops.Set("int", 77);
+	args.Set("props", eprops);
+	es.FireEvent("TestFire", args);
+
 
 
 
