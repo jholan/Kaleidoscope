@@ -213,6 +213,7 @@
     <ClCompile Include="Async\Mutex.cpp" />
     <ClCompile Include="Async\ReaderWriterMutex.cpp" />
     <ClCompile Include="Async\Thread.cpp" />
+    <ClCompile Include="Core\EngineCommon.cpp" />
     <ClCompile Include="Core\ErrorWarningAssert.cpp" />
     <ClCompile Include="Jobs\JobSystem.cpp" />
     <ClCompile Include="Math\MathUtils.cpp" />

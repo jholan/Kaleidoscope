@@ -17,8 +17,8 @@ class EventSystem
 {
 public:
 	// Composition
-	EventSystem();
-	~EventSystem();
+	inline EventSystem();
+	inline ~EventSystem();
 
 
 	// Fire Event

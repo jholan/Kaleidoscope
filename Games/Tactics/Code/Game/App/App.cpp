@@ -1,5 +1,7 @@
 #include "Game/App/App.hpp"
 
+#include "Engine/Core/EngineCommon.hpp"
+
 
 
 // -----------------------------------------------------------------
@@ -8,12 +10,14 @@
 void App::Initialize()
 {
 	// Initialize for subsystems
+	InitializeRequiredEngineSubsystems();
 }
 
 
 void App::Destroy()
 {
 	// Destroy for subsystems
+	DestroyRequiredEngineSubsystems();
 }
 
 

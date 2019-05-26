@@ -13,7 +13,7 @@ class TypedProperties
 {
 public:
 	// Composition
-	TypedProperties();
+	inline TypedProperties();
 	inline TypedProperties(const TypedProperties& other);
 	inline ~TypedProperties();
 

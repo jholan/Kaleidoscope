@@ -137,5 +137,8 @@
     <ClCompile Include="XML\XMLUtils.cpp">
       <Filter>General</Filter>
     </ClCompile>
+    <ClCompile Include="Core\EngineCommon.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

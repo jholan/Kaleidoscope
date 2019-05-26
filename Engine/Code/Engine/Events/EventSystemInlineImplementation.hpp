@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/Events/EventSystem.hpp"
 
+#include "Engine/Strings/HashedString.hpp"
+#include "Engine/Core/TypedProperties.hpp"
+
 
 
 // -----------------------------------------------------------------
