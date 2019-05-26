@@ -5,6 +5,8 @@
 
 #include "Engine/Math/Vectors.hpp"
 
+class WindowMessageCallback_Base;
+
 typedef void (*WindowMessage_Callback)(uint messageCode, ulonglong wparam, longlong lparam);
 
 
@@ -20,6 +22,7 @@ public:
 	void Initialize(const std::string& name, int height, int aspectW, int aspectH); // Aspect is separated to avoid float error
 		void CreateWindowsWindow();
 	void Destroy();
+		void RemoveAllCallbacks();
 		void RemoveSelfFromWindowList();
 
 
@@ -28,9 +31,17 @@ public:
 
 
 	// Callbacks
-	void RegisterCallback(WindowMessage_Callback callback);
-	void UnregisterCallback(WindowMessage_Callback callback);
+	// C Functions
+	inline void RegisterCallback(WindowMessage_Callback callback);
+	inline void UnregisterCallback(WindowMessage_Callback callback);
 
+	// Member Functions
+	template<typename T, typename DummyCallback>
+	void RegisterMemberCallback(T* user, DummyCallback callback);
+
+	template<typename T, typename DummyCallback>
+	void UnregisterMemberCallback(T* user, DummyCallback callback);
+	
 
 	// Handle
 	void* GetHandle() const; // Safely castable to HWND
@@ -59,10 +70,15 @@ private:
 	std::string m_name;
 	ivec2		m_dimensions;
 
-	std::vector<WindowMessage_Callback> m_callbacks;
+	std::vector<WindowMessageCallback_Base*> m_callbacks;
 
 
 
 private:
 	static std::vector<Window*> s_allWindows;
 };
+
+
+
+
+#include "Engine/Rendering/Window.ii.hpp"

@@ -202,6 +202,7 @@
     <ClInclude Include="Math\Vectors.hpp" />
     <ClInclude Include="Rendering\RGBA.hpp" />
     <ClInclude Include="Rendering\Window.hpp" />
+    <ClInclude Include="Rendering\Window.ii.hpp" />
     <ClInclude Include="Strings\HashedString.hpp" />
     <ClInclude Include="Strings\StringUtils.hpp" />
     <ClInclude Include="Time\Clock.hpp" />

@@ -13,7 +13,7 @@ class SubscriberListingBase
 {
 public:
 	SubscriberListingBase() {};
-	~SubscriberListingBase() {};
+	virtual ~SubscriberListingBase() {};
 
 	virtual bool Call(TypedProperties& args) = 0;
 };
@@ -41,13 +41,10 @@ public:
 	SubscriberListingMemberFunction(t* user, dummy callback);
 
 	inline virtual bool		Call(TypedProperties& args) override;
-	//inline t*				GetUser() const;
-	//inline EventCallback	GetCallback() const;
 
 
 	t*				m_user;
 	EventCallback	m_callback;
-private:
 };
 
 

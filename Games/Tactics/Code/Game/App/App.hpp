@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Engine/Core/Types.hpp"
+
 
 
 class App
@@ -24,6 +26,10 @@ public:
 	// Quit
 	void Quit();
 	bool IsQuitting() const;
+
+
+	// Window Callbacks
+	void HandleXOut(uint msg, ulonglong wparam, longlong lparam);
 
 
 

@@ -10,22 +10,6 @@
 
 
 // -----------------------------------------------------------------
-// Callbacks
-// -----------------------------------------------------------------
-void HandleXOut(uint msg, ulonglong wparam, longlong lparam)
-{
-	UNUSED(wparam);
-	UNUSED(lparam);
-
-	if (msg == WM_CLOSE)
-	{
-		g_theApp->Quit();
-	}
-}
-
-
-
-// -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
 void App::Initialize()
@@ -35,7 +19,7 @@ void App::Initialize()
 
 	g_theWindow = new Window();
 	g_theWindow->Initialize("Tactics", 1600, 900);
-	g_theWindow->RegisterCallback(HandleXOut);
+	g_theWindow->RegisterMemberCallback(this, &App::HandleXOut);
 }
 
 
@@ -118,4 +102,20 @@ void App::Quit()
 bool App::IsQuitting() const
 {
 	return m_isQuitting;
+}
+
+
+
+// -----------------------------------------------------------------
+// Window Callbacks
+// -----------------------------------------------------------------
+void App::HandleXOut(uint msg, ulonglong wparam, longlong lparam)
+{
+	UNUSED(wparam);
+	UNUSED(lparam);
+
+	if (msg == WM_CLOSE)
+	{
+		Quit();
+	}
 }

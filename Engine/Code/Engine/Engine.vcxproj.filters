@@ -76,6 +76,7 @@
     <ClInclude Include="XML\XMLUtils.hpp" />
     <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="Rendering\Window.hpp" />
+    <ClInclude Include="Rendering\Window.ii.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">

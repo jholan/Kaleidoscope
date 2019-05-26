@@ -38,7 +38,7 @@ Window::Window()
 
 Window::~Window()
 {
-
+	
 }
 
 
@@ -155,7 +155,20 @@ void Window::Initialize(const std::string& name, int height, int aspectW, int as
 
 void Window::Destroy()
 {
+	RemoveAllCallbacks();
 	RemoveSelfFromWindowList();
+}
+
+
+void Window::RemoveAllCallbacks()
+{
+	// Clean up all callbacks
+	for (int i = 0; i < (int)m_callbacks.size(); ++i)
+	{
+		delete m_callbacks[i];
+		m_callbacks[i] = nullptr;
+	}
+	m_callbacks.clear();
 }
 
 
@@ -179,7 +192,7 @@ bool Window::RunWndProc(uint messageCode, ulonglong wparam, longlong lparam)
 {
 	for (int i = 0; i < (int)m_callbacks.size(); ++i)
 	{
-		m_callbacks[i](messageCode, wparam, lparam);
+		m_callbacks[i]->Call(messageCode, wparam, lparam);
 	}
 
 
@@ -189,44 +202,9 @@ bool Window::RunWndProc(uint messageCode, ulonglong wparam, longlong lparam)
 
 
 // -----------------------------------------------------------------
-// Callbacks
+// Callbacks -> Window.ii.hpp
 // -----------------------------------------------------------------
-void Window::RegisterCallback(WindowMessage_Callback callback)
-{
-	// Check to see the callback has already been registered
-	bool alreadyAdded = false;
-	for (int i = 0; i < (int)m_callbacks.size(); ++i)
-	{
-		if (m_callbacks[i] == callback)
-		{
-			alreadyAdded = true;
-		}
-	}
 
-
-	// SHORT CIRCUIT
-	if (alreadyAdded)
-	{
-		// If it has already been added don't add a second copy
-		return;
-	}
-
-
-	// Add the callback if it is unique
-	m_callbacks.push_back(callback);
-}
-
-
-void Window::UnregisterCallback(WindowMessage_Callback callback)
-{
-	for (int i = 0; i < (int)m_callbacks.size(); ++i)
-	{
-		if (m_callbacks[i] == callback)
-		{
-			m_callbacks.erase(m_callbacks.begin() + i);
-		}
-	}
-}
 
 
 
