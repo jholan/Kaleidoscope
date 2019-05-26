@@ -75,6 +75,7 @@
     <ClInclude Include="Async\Atomic.hpp" />
     <ClInclude Include="XML\XMLUtils.hpp" />
     <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
+    <ClInclude Include="Rendering\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -138,6 +139,9 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Core\EngineCommon.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Window.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

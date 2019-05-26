@@ -201,6 +201,7 @@
     <ClInclude Include="Math\Vectors\Vec4InlineImplementation.hpp" />
     <ClInclude Include="Math\Vectors.hpp" />
     <ClInclude Include="Rendering\RGBA.hpp" />
+    <ClInclude Include="Rendering\Window.hpp" />
     <ClInclude Include="Strings\HashedString.hpp" />
     <ClInclude Include="Strings\StringUtils.hpp" />
     <ClInclude Include="Time\Clock.hpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Math\Primitives\Sphere.cpp" />
     <ClCompile Include="Math\Primitives\Triangle.cpp" />
     <ClCompile Include="Rendering\RGBA.cpp" />
+    <ClCompile Include="Rendering\Window.cpp" />
     <ClCompile Include="Strings\HashedString.cpp" />
     <ClCompile Include="Strings\StringUtils.cpp" />
     <ClCompile Include="Time\Clock.cpp" />

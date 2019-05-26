@@ -16,6 +16,7 @@ public:
 	// Update
 	void RunInternalLoop();
 		void RunFrame();
+			void RunMessagePump();
 			void Update();
 			void Render() const;
 
