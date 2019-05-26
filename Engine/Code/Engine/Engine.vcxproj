@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="Async\Atomic.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueue.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueueInlineImplementation.hpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Time\Clock.hpp" />
     <ClInclude Include="Time\Stopwatch.hpp" />
     <ClInclude Include="Time\TimeUtils.hpp" />
+    <ClInclude Include="XML\XMLUtils.hpp" />
     <ClInclude Include="__Control\__Control.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +229,7 @@
     <ClCompile Include="Time\Clock.cpp" />
     <ClCompile Include="Time\Stopwatch.cpp" />
     <ClCompile Include="Time\TimeUtils.cpp" />
+    <ClCompile Include="XML\XMLUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
