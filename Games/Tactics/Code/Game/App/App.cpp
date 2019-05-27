@@ -8,7 +8,7 @@
 #include "Engine/Rendering/Window.hpp"
 
 
-
+#include "Engine/Core/Blackboard.hpp"
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
@@ -17,8 +17,11 @@ void App::Initialize()
 	// Initialize for subsystems
 	InitializeRequiredEngineSubsystems();
 
+	g_theBlackboard = new Blackboard();
+	g_theBlackboard->PopulateFromXML("Data/Config.xml");
+
 	g_theWindow = new Window();
-	g_theWindow->Initialize("Tactics", 1600, 900);
+	g_theWindow->Initialize(g_theBlackboard->GetValue("Window.AppName", "Main Window"), g_theBlackboard->GetValue("Window.Resolution.Width", 100), g_theBlackboard->GetValue("Window.Resolution.Height", 100));
 	g_theWindow->RegisterMemberCallback(this, &App::HandleXOut);
 }
 

@@ -34,7 +34,7 @@ std::string					ToString(float value, uint decimalPlaces);
 
 
 // String to X
-bool						StringToBool(const std::string& string);
+bool						StringToBool(const std::string& string, bool defaultValue = false);
 float						StringToFloat(const std::string& string, float defaultValue = 0.0f);
 int							StringToInt(const std::string& string, int defaultValue = 0);
 

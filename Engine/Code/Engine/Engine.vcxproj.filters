@@ -77,6 +77,7 @@
     <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="Rendering\Window.hpp" />
     <ClInclude Include="Rendering\Window.ii.hpp" />
+    <ClInclude Include="Core\Blackboard.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -143,6 +144,12 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\Window.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Blackboard.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

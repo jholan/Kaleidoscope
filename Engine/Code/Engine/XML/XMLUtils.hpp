@@ -5,6 +5,7 @@
 #include "ThirdParty/TinyXML2/tinyxml2.h"
 using XMLDoc = tinyxml2::XMLDocument;
 using XMLEle = tinyxml2::XMLElement;
+using XMLAttr = tinyxml2::XMLAttribute;
 
 
 
@@ -23,6 +24,12 @@ using XMLEle = tinyxml2::XMLElement;
 
 	Queries(Only for use in functions in this header)
 		const char* XMLEle::Attribute(const char* name)			-> Grab value for attribute with name
+		XMLAttr*	XMLEle::FirstAttribute()					-> Grab first attribute
+
+
+	XML Attributes
+	Traversal
+		XMLAttr*	XMLAttr::Next()								-> Grab next sibling attribute, nullptr if no more attributes
 */
 
 

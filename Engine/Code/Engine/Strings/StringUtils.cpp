@@ -201,9 +201,9 @@ std::string ToString(float value, uint decimalPlaces)
 // -----------------------------------------------------------------
 // String to X
 // -----------------------------------------------------------------
-bool StringToBool(const std::string& string)
+bool StringToBool(const std::string& string, bool defaultValue)
 {
-	bool value = true;
+	bool value = defaultValue;
 
 	const char* firstCharacter = FindFirstCharacterInString(string.c_str(), "tTfF");
 	if (CompareStringsCaseInsensitive(firstCharacter, "true"))

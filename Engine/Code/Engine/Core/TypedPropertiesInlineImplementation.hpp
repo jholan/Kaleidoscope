@@ -86,6 +86,24 @@ void TypedProperties::operator=(const TypedProperties& copyFrom)
 
 
 // -----------------------------------------------------------------
+// Existence
+// -----------------------------------------------------------------
+bool TypedProperties::DoesPropertyExist(const HashedString& key) const
+{
+	bool exists = false;
+
+	auto searchIter = m_properties.find(key);
+	if (searchIter != m_properties.end())
+	{
+		exists = true;
+	}
+	
+	return exists;
+}
+
+
+
+// -----------------------------------------------------------------
 // Set
 // -----------------------------------------------------------------
 template <typename t>

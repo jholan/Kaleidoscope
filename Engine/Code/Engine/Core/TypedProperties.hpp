@@ -20,6 +20,10 @@ public:
 	inline void operator=(const TypedProperties& copyFrom);
 
 
+	// Existence
+	inline bool DoesPropertyExist(const HashedString& key) const;
+
+
 	// Set value
 	template <typename t>
 	void Set(const HashedString& key, const t& value);
