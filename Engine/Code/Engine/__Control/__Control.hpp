@@ -2,6 +2,7 @@
 
 // Graphics
 #define DIRECT_X
+#define DEBUG_CONTEXT
 
 // Strings
 #define STRING_HASH_SAFETY

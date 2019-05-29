@@ -78,6 +78,11 @@
     <ClInclude Include="Rendering\Window.hpp" />
     <ClInclude Include="Rendering\Window.ii.hpp" />
     <ClInclude Include="Core\Blackboard.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RHIInstance.hpp" />
+    <ClInclude Include="Rendering\LowLevel\D3D11PreDefines.hpp" />
+    <ClInclude Include="Rendering\LowLevel\VideoCardDescription.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RHIDevice.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RHIOutput.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -150,6 +155,18 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\RHIInstance.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\VideoCardDescription.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\RHIDevice.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\RHIOutput.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

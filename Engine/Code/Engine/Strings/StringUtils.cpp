@@ -2,6 +2,8 @@
 
 #include <stdarg.h>
 
+#include "Engine/Core/ErrorWarningAssert.hpp"
+
 #include "Engine/Core/EngineCommon.hpp"
 
 static const int STRINGF_STACK_LOCAL_TEMP_LENGTH = 2048;
@@ -419,4 +421,22 @@ char* CopyString(const std::string& string)
 	char* editableText = new char[string.length() + 1];
 	strcpy_s(editableText, string.length() + 1, string.c_str());
 	return editableText;
+}
+
+
+
+// -----------------------------------------------------------------
+// WChar
+// -----------------------------------------------------------------
+std::string ConvertWideCharStringToString(const wchar_t* wideString, unsigned int length)
+{
+	GUARANTEE_OR_DIE(length < WCHAR_MAX_CONVERSION_LENGTH, "Wide string is too long to convert");
+
+	// Grr wchar
+	size_t i;
+	char string[WCHAR_MAX_CONVERSION_LENGTH];
+	wcstombs_s(&i, string, WCHAR_MAX_CONVERSION_LENGTH, wideString, WCHAR_MAX_CONVERSION_LENGTH);
+
+	std::string stringstring = string;
+	return stringstring;
 }

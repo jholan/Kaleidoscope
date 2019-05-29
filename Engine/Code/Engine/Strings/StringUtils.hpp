@@ -60,3 +60,7 @@ const char*					FindFirstCharacterInString(const char* string, const char* chars
 
 // Copy	
 char*						CopyString(const std::string& string);
+
+
+// Wchar
+std::string					ConvertWideCharStringToString(const wchar_t* wideString, uint length);

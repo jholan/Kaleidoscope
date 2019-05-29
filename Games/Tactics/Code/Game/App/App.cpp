@@ -6,9 +6,12 @@
 #include "Game/App/AppCommon.hpp"
 
 #include "Engine/Rendering/Window.hpp"
-
-
 #include "Engine/Core/Blackboard.hpp"
+
+
+#include "Engine/Rendering/LowLevel/RHIInstance.hpp"
+#include "Engine/Rendering/LowLevel/RHIDevice.hpp"
+#include "Engine/Rendering/LowLevel/RHIOutput.hpp"
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
@@ -23,6 +26,16 @@ void App::Initialize()
 	g_theWindow = new Window();
 	g_theWindow->Initialize(g_theBlackboard->GetValue("Window.AppName", "Main Window"), g_theBlackboard->GetValue("Window.Resolution.Width", 100), g_theBlackboard->GetValue("Window.Resolution.Height", 100));
 	g_theWindow->RegisterMemberCallback(this, &App::HandleXOut);
+
+	RHIInstance rhii;
+	rhii.Initialize();
+	RHIDevice rhid;
+	rhid.Initialize(&rhii, rhii.GetVideoCard(0));
+	RHIOutput rhio;
+	rhio.Initialize(&rhii, &rhid, g_theWindow);
+	rhio.Destroy();
+	rhid.Destroy();
+	rhii.Destroy();
 }
 
 
