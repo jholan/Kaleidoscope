@@ -83,6 +83,8 @@
     <ClInclude Include="Rendering\LowLevel\VideoCardDescription.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIDevice.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIOutput.hpp" />
+    <ClInclude Include="Rendering\LowLevel\BlendState.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -167,6 +169,12 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\RHIOutput.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\BlendState.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\RenderingEnums.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

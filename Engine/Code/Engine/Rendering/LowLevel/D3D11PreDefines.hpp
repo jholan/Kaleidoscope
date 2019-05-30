@@ -56,3 +56,8 @@ struct ID3D11UnorderedAccessView;
 
 // Sampler
 struct ID3D11SamplerState;
+
+
+// Enums
+enum D3D11_BLEND_OP;
+enum D3D11_BLEND;
