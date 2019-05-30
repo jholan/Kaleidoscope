@@ -61,3 +61,5 @@ struct ID3D11SamplerState;
 // Enums
 enum D3D11_BLEND_OP;
 enum D3D11_BLEND;
+enum D3D11_CULL_MODE;
+enum D3D11_FILL_MODE;

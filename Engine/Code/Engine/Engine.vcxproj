@@ -203,6 +203,7 @@
     <ClInclude Include="Math\Vectors.hpp" />
     <ClInclude Include="Rendering\LowLevel\BlendState.hpp" />
     <ClInclude Include="Rendering\LowLevel\D3D11PreDefines.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RasterizerState.hpp" />
     <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIDevice.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIInstance.hpp" />
@@ -237,6 +238,7 @@
     <ClCompile Include="Math\Primitives\Sphere.cpp" />
     <ClCompile Include="Math\Primitives\Triangle.cpp" />
     <ClCompile Include="Rendering\LowLevel\BlendState.cpp" />
+    <ClCompile Include="Rendering\LowLevel\RasterizerState.cpp" />
     <ClCompile Include="Rendering\LowLevel\RenderingEnums.cpp" />
     <ClCompile Include="Rendering\LowLevel\RHIDevice.cpp" />
     <ClCompile Include="Rendering\LowLevel\RHIInstance.cpp" />

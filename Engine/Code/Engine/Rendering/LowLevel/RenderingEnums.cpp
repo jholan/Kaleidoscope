@@ -8,7 +8,7 @@
 
 
 // -----------------------------------------------------------------
-// BlendOp
+// Blend Op
 // -----------------------------------------------------------------
 static const HashedString BLEND_OP_NAMES[] = 
 {
@@ -108,7 +108,7 @@ eBlendOp GetBlendOpFromString(const HashedString& string, eBlendOp defaultValue)
 
 
 // -----------------------------------------------------------------
-// BlendFactor
+// Blend Factor
 // -----------------------------------------------------------------
 static const HashedString BLEND_FACTOR_NAMES[] = 
 {
@@ -269,4 +269,216 @@ eBlendFactor GetBlendFactorFromString(const HashedString& string, eBlendFactor d
 
 
 	return blendFactor;
+}
+
+
+
+// -----------------------------------------------------------------
+// Cull Mode
+// -----------------------------------------------------------------
+static HashedString CULL_MODE_NAMES[] = 
+{
+	"back",
+	"front",
+	"none"
+};
+
+
+D3D11_CULL_MODE ConvertToD3D11CullMode(eCullMode cullMode)
+{
+	D3D11_CULL_MODE d3dCullMode = D3D11_CULL_BACK;
+
+	switch(cullMode)
+	{
+	case CULL_BACK:
+	{
+		d3dCullMode = D3D11_CULL_BACK;
+		break;
+	}
+	case CULL_FRONT:
+	{
+		d3dCullMode = D3D11_CULL_FRONT;
+		break;
+	}
+	case CULL_NONE:
+	{
+		d3dCullMode = D3D11_CULL_NONE;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return d3dCullMode;
+}
+
+
+HashedString GetCullModeName(eCullMode cullMode)
+{
+	HashedString name = CULL_MODE_NAMES[(int)cullMode];
+	return name;
+}
+
+
+eCullMode GetCullModeFromString(const HashedString& string, eCullMode defaultValue)
+{
+	eCullMode cullMode = defaultValue;
+
+
+	// Static Names
+	static HashedString backName  = CULL_MODE_NAMES[(int)CULL_BACK];
+	static HashedString frontName = CULL_MODE_NAMES[(int)CULL_FRONT];
+	static HashedString noneName  = CULL_MODE_NAMES[(int)CULL_NONE];
+
+
+	// Comparisons
+	if (string == backName)
+	{
+		cullMode = CULL_BACK;
+	}
+	else if (string == frontName)
+	{
+		cullMode = CULL_FRONT;
+	}
+	else if (string == noneName)
+	{
+		cullMode = CULL_NONE;
+	}
+
+
+	return cullMode;
+}
+
+
+
+// -----------------------------------------------------------------
+// Winding Order
+// -----------------------------------------------------------------
+static HashedString WINDING_ORDER_NAMES[] = 
+{
+	"ccw",
+	"cw"
+};
+
+
+bool ConvertToD3D11WindingOrder(eWindingOrder windingOrder)
+{
+	bool isCCW = true;
+
+	switch(windingOrder)
+	{
+	case WINDING_ORDER_CCW:
+	{
+		isCCW = true;
+		break;
+	}
+	case WINDING_ORDER_CW:
+	{
+		isCCW = false;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return isCCW;
+}
+
+
+HashedString GetWindingOrderName(eWindingOrder windingOrder)
+{
+	HashedString name = WINDING_ORDER_NAMES[(int)windingOrder];
+	return name;
+}
+
+
+eWindingOrder GetWindingOrderFromString(const HashedString& string, eWindingOrder defaultValue)
+{
+	eWindingOrder windingOrder = defaultValue;
+
+
+	// Static Names
+	static HashedString ccwString = WINDING_ORDER_NAMES[(int)WINDING_ORDER_CCW];
+	static HashedString cwString  = WINDING_ORDER_NAMES[(int)WINDING_ORDER_CW];
+
+
+	// Comparisons
+	if (string == ccwString)
+	{
+		windingOrder = WINDING_ORDER_CCW;
+	}
+	else if (string == cwString)
+	{
+		windingOrder = WINDING_ORDER_CW;
+	}
+
+
+	return windingOrder;
+}
+
+
+
+// -----------------------------------------------------------------
+// Fill Mode
+// -----------------------------------------------------------------
+static HashedString FILL_MODE_NAMES[] =
+{
+	"solid",
+	"wireframe"
+};
+
+
+D3D11_FILL_MODE	ConvertToD3D11FillMode(eFillMode fillMode)
+{
+	D3D11_FILL_MODE d3dFillMode = D3D11_FILL_SOLID;
+
+	switch(fillMode)
+	{
+	case FILL_SOLID:
+	{
+		d3dFillMode = D3D11_FILL_SOLID;
+		break;
+	}
+	case FILL_WIREFRAME:
+	{
+		d3dFillMode = D3D11_FILL_WIREFRAME;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return d3dFillMode;
+}
+
+
+HashedString GetFillModeName(eFillMode fillMode)
+{
+	HashedString name = FILL_MODE_NAMES[(int)fillMode];
+	return name;
+}
+
+
+eFillMode GetFillModeFromString(const HashedString& string, eFillMode defaultValue)
+{
+	eFillMode fillMode = defaultValue;
+
+
+	// Static Names
+	static HashedString solidName		= FILL_MODE_NAMES[(int)FILL_SOLID];
+	static HashedString wireframeName	= FILL_MODE_NAMES[(int)FILL_WIREFRAME];
+
+
+	// Comparisons
+	if (string == solidName)
+	{
+		fillMode = FILL_SOLID;
+	}
+	else if (string == wireframeName)
+	{
+		fillMode = FILL_WIREFRAME;
+	}
+
+
+	return fillMode;
 }

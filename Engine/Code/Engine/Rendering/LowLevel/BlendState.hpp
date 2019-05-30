@@ -68,8 +68,8 @@ public:
 
 
 private:
-	const RHIDevice*		m_device;
+	const RHIDevice*		m_device = nullptr;
 
 	BlendStateDescription	m_description;
-	ID3D11BlendState*		m_handle;
+	ID3D11BlendState*		m_handle = nullptr;
 };
