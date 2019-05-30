@@ -86,6 +86,7 @@
     <ClInclude Include="Rendering\LowLevel\BlendState.hpp" />
     <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
     <ClInclude Include="Rendering\LowLevel\RasterizerState.hpp" />
+    <ClInclude Include="Rendering\LowLevel\DepthStencilState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -179,6 +180,9 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\RasterizerState.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\DepthStencilState.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

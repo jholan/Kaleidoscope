@@ -67,10 +67,43 @@ eWindingOrder	GetWindingOrderFromString(const HashedString& string, eWindingOrde
 
 enum eFillMode
 {
-	FILL_SOLID,
+	FILL_SOLID = 0,
 	FILL_WIREFRAME
 };
 D3D11_FILL_MODE	ConvertToD3D11FillMode(eFillMode fillMode);
 HashedString	GetFillModeName(eFillMode fillMode);
 eFillMode		GetFillModeFromString(const HashedString& string, eFillMode defaultValue = FILL_SOLID);
 
+
+
+enum eCompareOp
+{
+	COMPARE_OP_NEVER = 0,
+	COMPARE_OP_LESS,
+	COMPARE_OP_LEQUAL,
+	COMPARE_OP_GREATER,
+	COMPARE_OP_GEQUAL,
+	COMPARE_OP_EQUAL,
+	COMPARE_OP_NOT_EQUAL,
+	COMPARE_OP_ALWAYS,
+};
+D3D11_COMPARISON_FUNC	ConvertToD3D11CompareOp(eCompareOp compareOp);
+HashedString			GetCompareOpName(eCompareOp compareOp);
+eCompareOp				GetCompareOpFromString(const HashedString& string, eCompareOp defaultValue = COMPARE_OP_ALWAYS);
+
+
+
+enum eStencilOp
+{
+	STENCIL_OP_KEEP = 0,
+	STENCIL_OP_ZERO,
+	STENCIL_OP_REPLACE,
+	STENCIL_OP_INC_SATURATE,
+	STENCIL_OP_DEC_SATURATE,
+	STENCIL_OP_INVERT,
+	STENCIL_OP_INC,
+	STENCIL_OP_DEC
+};
+D3D11_STENCIL_OP	ConvertToD3D11StencilOp(eStencilOp stencilOp);
+HashedString		GetCompareOpName(eStencilOp stencilOp);
+eStencilOp			GetCompareOpFromString(const HashedString& string, eStencilOp defaultValue = STENCIL_OP_KEEP);

@@ -482,3 +482,269 @@ eFillMode GetFillModeFromString(const HashedString& string, eFillMode defaultVal
 
 	return fillMode;
 }
+
+
+
+// -----------------------------------------------------------------
+// Compare Op
+// -----------------------------------------------------------------
+static HashedString COMPARE_OP_NAMES[] = 
+{
+	"never",
+	"less",
+	"lequal",
+	"greater",
+	"gequal",
+	"equal",
+	"notEqual",
+	"always"
+};
+
+
+D3D11_COMPARISON_FUNC ConvertToD3D11CompareOp(eCompareOp compareOp)
+{
+	D3D11_COMPARISON_FUNC compFunc = D3D11_COMPARISON_ALWAYS;
+
+	switch(compareOp)
+	{
+	case COMPARE_OP_NEVER:
+	{
+		compFunc = D3D11_COMPARISON_NEVER;
+		break;
+	}
+	case COMPARE_OP_LESS:
+	{
+		compFunc = D3D11_COMPARISON_LESS;
+		break;
+	}
+	case COMPARE_OP_LEQUAL:
+	{
+		compFunc = D3D11_COMPARISON_LESS_EQUAL;
+		break;
+	}
+	case COMPARE_OP_GREATER:
+	{
+		compFunc = D3D11_COMPARISON_GREATER;
+		break;
+	}
+	case COMPARE_OP_GEQUAL:
+	{
+		compFunc = D3D11_COMPARISON_GREATER_EQUAL;
+		break;
+	}
+	case COMPARE_OP_EQUAL:
+	{
+		compFunc = D3D11_COMPARISON_EQUAL;
+		break;
+	}
+	case COMPARE_OP_NOT_EQUAL:
+	{
+		compFunc = D3D11_COMPARISON_NOT_EQUAL;
+		break;
+	}
+	case COMPARE_OP_ALWAYS:
+	{
+		compFunc = D3D11_COMPARISON_ALWAYS;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return compFunc;
+}
+
+
+HashedString GetCompareOpName(eCompareOp compareOp)
+{
+	HashedString name = COMPARE_OP_NAMES[(int)compareOp];
+	return name;
+}
+
+
+eCompareOp GetCompareOpFromString(const HashedString& string, eCompareOp defaultValue)
+{
+	eCompareOp compareOp = defaultValue;
+
+
+	// Static Names
+	static HashedString neverName		= COMPARE_OP_NAMES[(int)COMPARE_OP_NEVER];
+	static HashedString lessName		= COMPARE_OP_NAMES[(int)COMPARE_OP_LESS];
+	static HashedString lequalName		= COMPARE_OP_NAMES[(int)COMPARE_OP_LEQUAL];
+	static HashedString greaterName		= COMPARE_OP_NAMES[(int)COMPARE_OP_GREATER];
+	static HashedString gequalName		= COMPARE_OP_NAMES[(int)COMPARE_OP_GEQUAL];
+	static HashedString equalName		= COMPARE_OP_NAMES[(int)COMPARE_OP_EQUAL];
+	static HashedString notEqualName	= COMPARE_OP_NAMES[(int)COMPARE_OP_NOT_EQUAL];
+	static HashedString alwaysName		= COMPARE_OP_NAMES[(int)COMPARE_OP_ALWAYS];
+
+
+	// Comparisons
+	if (string == neverName)
+	{
+		compareOp = COMPARE_OP_NEVER;
+	}
+	else if (string == lessName)
+	{
+		compareOp = COMPARE_OP_LESS;
+	}
+	else if (string == lequalName)
+	{
+		compareOp = COMPARE_OP_LEQUAL;
+	}
+	else if (string == greaterName)
+	{
+		compareOp = COMPARE_OP_GREATER;
+	}
+	else if (string == gequalName)
+	{
+		compareOp = COMPARE_OP_GEQUAL;
+	}
+	else if (string == equalName)
+	{
+		compareOp = COMPARE_OP_EQUAL;
+	}
+	else if (string == notEqualName)
+	{
+		compareOp = COMPARE_OP_NOT_EQUAL;
+	}
+	else if (string == alwaysName)
+	{
+		compareOp = COMPARE_OP_ALWAYS;
+	}
+
+
+	return compareOp;
+}
+
+
+
+// -----------------------------------------------------------------
+// Stencil Op
+// -----------------------------------------------------------------
+static HashedString STENCIL_OP_NAMES[]  =
+{
+	"keep",
+	"zero",
+	"replace",
+	"incSaturate",
+	"decSaturate",
+	"invert",
+	"inc",
+	"dec"
+};
+
+
+D3D11_STENCIL_OP ConvertToD3D11StencilOp(eStencilOp stencilOp)
+{
+	D3D11_STENCIL_OP d3dStencilOp = D3D11_STENCIL_OP_KEEP;
+
+	switch(stencilOp)
+	{
+	case STENCIL_OP_KEEP:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_KEEP;
+		break;
+	}
+	case STENCIL_OP_ZERO:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_ZERO;
+		break;
+	}
+	case STENCIL_OP_REPLACE:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_REPLACE;
+		break;
+	}
+	case STENCIL_OP_INC_SATURATE:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_INCR_SAT;
+		break;
+	}
+	case STENCIL_OP_DEC_SATURATE:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_DECR_SAT;
+		break;
+	}
+	case STENCIL_OP_INVERT:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_INVERT;
+		break;
+	}
+	case STENCIL_OP_INC:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_INCR;
+		break;
+	}
+	case STENCIL_OP_DEC:
+	{
+		d3dStencilOp = D3D11_STENCIL_OP_DECR;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return d3dStencilOp;
+}
+
+
+HashedString GetCompareOpName(eStencilOp stencilOp)
+{
+	HashedString name = STENCIL_OP_NAMES[(int)stencilOp];
+	return name;
+}
+
+
+eStencilOp GetCompareOpFromString(const HashedString& string, eStencilOp defaultValue)
+{
+	eStencilOp stencilOp = defaultValue;
+
+
+	// Static names
+	static HashedString keepName = STENCIL_OP_NAMES[(int)STENCIL_OP_KEEP];
+	static HashedString zeroName = STENCIL_OP_NAMES[(int)STENCIL_OP_ZERO];
+	static HashedString replaceName = STENCIL_OP_NAMES[(int)STENCIL_OP_REPLACE];
+	static HashedString incSatName = STENCIL_OP_NAMES[(int)STENCIL_OP_INC_SATURATE];
+	static HashedString decSatName = STENCIL_OP_NAMES[(int)STENCIL_OP_DEC_SATURATE];
+	static HashedString invertName = STENCIL_OP_NAMES[(int)STENCIL_OP_INVERT];
+	static HashedString incName = STENCIL_OP_NAMES[(int)STENCIL_OP_INC];
+	static HashedString decName = STENCIL_OP_NAMES[(int)STENCIL_OP_DEC];
+
+
+	// Comparisons
+	if (string == keepName)
+	{
+		stencilOp = STENCIL_OP_KEEP;
+	}
+	else if (string == zeroName)
+	{
+		stencilOp = STENCIL_OP_ZERO;
+	}
+	else if (string == replaceName)
+	{
+		stencilOp = STENCIL_OP_REPLACE;
+	}
+	else if (string == incSatName)
+	{
+		stencilOp = STENCIL_OP_INC_SATURATE;
+	}
+	else if (string == decSatName)
+	{
+		stencilOp = STENCIL_OP_DEC_SATURATE;
+	}
+	else if (string == invertName)
+	{
+		stencilOp = STENCIL_OP_INVERT;
+	}
+	else if (string == incName)
+	{
+		stencilOp = STENCIL_OP_INC;
+	}
+	else if (string == decName)
+	{
+		stencilOp = STENCIL_OP_DEC;
+	}
+
+
+	return stencilOp;
+}
