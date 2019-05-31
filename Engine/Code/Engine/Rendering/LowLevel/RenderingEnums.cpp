@@ -688,14 +688,14 @@ D3D11_STENCIL_OP ConvertToD3D11StencilOp(eStencilOp stencilOp)
 }
 
 
-HashedString GetCompareOpName(eStencilOp stencilOp)
+HashedString GetStencilOpName(eStencilOp stencilOp)
 {
 	HashedString name = STENCIL_OP_NAMES[(int)stencilOp];
 	return name;
 }
 
 
-eStencilOp GetCompareOpFromString(const HashedString& string, eStencilOp defaultValue)
+eStencilOp GetStencilOpFromString(const HashedString& string, eStencilOp defaultValue)
 {
 	eStencilOp stencilOp = defaultValue;
 
@@ -747,4 +747,82 @@ eStencilOp GetCompareOpFromString(const HashedString& string, eStencilOp default
 
 
 	return stencilOp;
+}
+
+
+
+// -----------------------------------------------------------------
+// Wrap Mode
+// -----------------------------------------------------------------
+static HashedString WRAP_MODE_NAMES[] = 
+{
+	"repeat",
+	"clampToEdge",
+	"clampToBorder"
+};
+
+
+D3D11_TEXTURE_ADDRESS_MODE ConvertToD3D11WrapMode(eWrapMode wrapMode)
+{
+	D3D11_TEXTURE_ADDRESS_MODE addressMode = D3D11_TEXTURE_ADDRESS_WRAP;
+
+	switch(wrapMode)
+	{
+	case WRAP_MODE_REPEAT:
+	{
+		addressMode = D3D11_TEXTURE_ADDRESS_WRAP;
+		break;
+	}
+	case WRAP_MODE_CLAMP_TO_EDGE:
+	{
+		addressMode = D3D11_TEXTURE_ADDRESS_CLAMP;
+		break;
+	}
+	case WRAP_MODE_CLAMP_TO_BORDER:
+	{
+		addressMode = D3D11_TEXTURE_ADDRESS_BORDER;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return addressMode;
+}
+
+
+HashedString GetWrapModeName(eWrapMode wrapMode)
+{
+	HashedString name = WRAP_MODE_NAMES[(int)wrapMode];
+	return name;
+}
+
+
+eWrapMode GetWrapModeFromString(const HashedString& string, eWrapMode defaultValue)
+{
+	eWrapMode wrapMode = defaultValue;
+
+
+	// Static names
+	static HashedString repeatName	= WRAP_MODE_NAMES[(int)WRAP_MODE_REPEAT];
+	static HashedString edgeName	= WRAP_MODE_NAMES[(int)WRAP_MODE_CLAMP_TO_EDGE];
+	static HashedString borderName	= WRAP_MODE_NAMES[(int)WRAP_MODE_CLAMP_TO_BORDER];
+
+
+	// Comparisons
+	if (string == repeatName)
+	{
+		wrapMode = WRAP_MODE_REPEAT;
+	}
+	else if (string == edgeName)
+	{
+		wrapMode = WRAP_MODE_CLAMP_TO_EDGE;
+	}
+	else if (string == borderName)
+	{
+		wrapMode = WRAP_MODE_CLAMP_TO_BORDER;
+	}
+
+
+	return wrapMode;
 }

@@ -12,6 +12,7 @@
 #include "Engine/Rendering/LowLevel/RHIInstance.hpp"
 #include "Engine/Rendering/LowLevel/RHIDevice.hpp"
 #include "Engine/Rendering/LowLevel/RHIOutput.hpp"
+#include "Engine/Rendering/LowLevel/GPUBuffer.hpp"
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
@@ -33,6 +34,8 @@ void App::Initialize()
 	rhid.Initialize(&rhii, rhii.GetVideoCard(0));
 	RHIOutput rhio;
 	rhio.Initialize(&rhii, &rhid, g_theWindow);
+
+	
 	rhio.Destroy();
 	rhid.Destroy();
 	rhii.Destroy();

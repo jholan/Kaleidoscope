@@ -87,6 +87,9 @@
     <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
     <ClInclude Include="Rendering\LowLevel\RasterizerState.hpp" />
     <ClInclude Include="Rendering\LowLevel\DepthStencilState.hpp" />
+    <ClInclude Include="Rendering\LowLevel\GPUBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\Sampler.hpp" />
+    <ClInclude Include="Rendering\LowLevel\VertexTypes.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -183,6 +186,12 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\DepthStencilState.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\GPUBuffer.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\Sampler.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

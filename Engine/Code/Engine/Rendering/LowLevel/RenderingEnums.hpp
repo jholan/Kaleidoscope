@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Engine/Core/Types.hpp"
+
 #include "Engine/Rendering/LowLevel/D3D11PreDefines.hpp"
 
 class HashedString;
@@ -105,5 +107,61 @@ enum eStencilOp
 	STENCIL_OP_DEC
 };
 D3D11_STENCIL_OP	ConvertToD3D11StencilOp(eStencilOp stencilOp);
-HashedString		GetCompareOpName(eStencilOp stencilOp);
-eStencilOp			GetCompareOpFromString(const HashedString& string, eStencilOp defaultValue = STENCIL_OP_KEEP);
+HashedString		GetStencilOpName(eStencilOp stencilOp);
+eStencilOp			GetStencilOpFromString(const HashedString& string, eStencilOp defaultValue = STENCIL_OP_KEEP);
+
+
+
+enum eBufferUsage
+{
+	BUFFER_USAGE_DEFAULT = 0,	// GPU(rw)	CPU()
+	BUFFER_USAGE_IMMUTABLE,		// GPU(r)	CPU()
+	BUFFER_USAGE_DYNAMIC,		// GPU(r)	CPU(w)
+	BUFFER_USAGE_STAGING		// GPU(rw)	CPU(rw)
+};
+D3D11_USAGE			ConvertToD3D11BufferUsage(eBufferUsage bufferUsage);
+HashedString		GetBufferUsageName(eBufferUsage bufferUsage);
+eBufferUsage		GetBufferUsageFromString(const HashedString& string, eBufferUsage defaultValue = BUFFER_USAGE_DEFAULT);
+
+
+
+enum eBufferBindPointFlag
+{
+	BUFFER_BIND_POINT_VERTEX,
+	BUFFER_BIND_POINT_INDEX,
+	BUFFER_BIND_POINT_CONSTANT
+};
+uint					ConvertToD3D11BufferBindPointFlags(uint bindPointFlags);
+D3D11_BIND_FLAG			ConvertToD3D11BindFlag(eBufferBindPointFlag bindPoint);
+HashedString			GetBufferUsageName(eBufferBindPointFlag bindPoint);
+eBufferBindPointFlag	GetBufferUsageFromString(const HashedString& string, eBufferBindPointFlag defaultValue = BUFFER_BIND_POINT_VERTEX);
+
+
+
+enum eResourceCPUAccessFlag
+{
+	RESOURCE_CPU_ACCESS_NONE = 0,
+	RESOURCE_CPU_ACCESS_WRITE,
+	RESOURCE_CPU_ACCESS_READ
+};
+uint ConvertToD3D11ResourceCPUAccessFlags(uint cpuAccessFlags);
+
+
+
+enum eBufferMiscFlag
+{
+	BUFFER_MISC_FLAG_NONE = 0
+};
+uint ConvertToD3D11BufferMiscFlags(uint bufferMiscFlags);
+
+
+
+enum eWrapMode
+{
+	WRAP_MODE_REPEAT = 0,
+	WRAP_MODE_CLAMP_TO_EDGE,
+	WRAP_MODE_CLAMP_TO_BORDER
+};
+D3D11_TEXTURE_ADDRESS_MODE	ConvertToD3D11WrapMode(eWrapMode wrapMode);
+HashedString				GetWrapModeName(eWrapMode wrapMode);
+eWrapMode					GetWrapModeFromString(const HashedString& string, eWrapMode defaultValue = WRAP_MODE_REPEAT);
