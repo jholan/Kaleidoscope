@@ -177,6 +177,7 @@
     <ClInclude Include="Core\WindowsLean.hpp" />
     <ClInclude Include="Events\EventSystem.hpp" />
     <ClInclude Include="Events\EventSystemInlineImplementation.hpp" />
+    <ClInclude Include="FileSystem\FileUtils.hpp" />
     <ClInclude Include="Jobs\JobSystem.hpp" />
     <ClInclude Include="Math\Matrix.hpp" />
     <ClInclude Include="Math\Primitives.hpp" />
@@ -211,6 +212,8 @@
     <ClInclude Include="Rendering\LowLevel\RHIInstance.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIOutput.hpp" />
     <ClInclude Include="Rendering\LowLevel\Sampler.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderProgram.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderProgramStage.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexAttribute.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexLayout.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexTypes.hpp" />
@@ -234,6 +237,7 @@
     <ClCompile Include="Core\Blackboard.cpp" />
     <ClCompile Include="Core\EngineCommon.cpp" />
     <ClCompile Include="Core\ErrorWarningAssert.cpp" />
+    <ClCompile Include="FileSystem\FileUtils.cpp" />
     <ClCompile Include="Jobs\JobSystem.cpp" />
     <ClCompile Include="Math\MathUtils.cpp" />
     <ClCompile Include="Math\Matrix.cpp" />
@@ -252,6 +256,8 @@
     <ClCompile Include="Rendering\LowLevel\RHIInstance.cpp" />
     <ClCompile Include="Rendering\LowLevel\RHIOutput.cpp" />
     <ClCompile Include="Rendering\LowLevel\Sampler.cpp" />
+    <ClCompile Include="Rendering\LowLevel\ShaderProgram.cpp" />
+    <ClCompile Include="Rendering\LowLevel\ShaderProgramStage.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexAttribute.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexLayout.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexTypes.cpp" />

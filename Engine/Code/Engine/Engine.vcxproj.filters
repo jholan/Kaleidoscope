@@ -90,6 +90,11 @@
     <ClInclude Include="Rendering\LowLevel\GPUBuffer.hpp" />
     <ClInclude Include="Rendering\LowLevel\Sampler.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexTypes.hpp" />
+    <ClInclude Include="Rendering\LowLevel\VertexAttribute.hpp" />
+    <ClInclude Include="Rendering\LowLevel\VertexLayout.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderProgramStage.hpp" />
+    <ClInclude Include="FileSystem\FileUtils.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderProgram.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -192,6 +197,24 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\Sampler.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\VertexAttribute.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\VertexLayout.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\VertexTypes.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\ShaderProgramStage.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem\FileUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\ShaderProgram.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

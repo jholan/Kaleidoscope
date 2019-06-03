@@ -24,6 +24,7 @@ struct ID3D11BlendState;
 
 
 // Shader Stages
+struct ID3D11DeviceChild;
 struct ID3D11VertexShader;
 struct ID3D11HullShader;
 struct ID3D11DomainShader;
