@@ -1,5 +1,7 @@
 #include "Engine/Core/EngineCommon.hpp"
 
+#include "Engine/Core/ErrorWarningAssert.hpp"
+
 #include "Engine/Events/EventSystem.hpp"
 #include "Engine/Time/Clock.hpp"
 
@@ -7,6 +9,7 @@
 
 Clock*			g_theMasterClock = nullptr;
 EventSystem*	g_theGlobalEventSystem = nullptr;
+
 
 
 void InitializeRequiredEngineSubsystems()
@@ -26,4 +29,11 @@ void DestroyRequiredEngineSubsystems()
 	g_theMasterClock->Destroy();
 	delete g_theMasterClock;
 	g_theMasterClock = nullptr;
+}
+
+
+
+void VerifyPointer(void* pointer)
+{
+	GUARANTEE_OR_DIE(pointer != nullptr, "Invalid Pointer");
 }

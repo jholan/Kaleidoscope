@@ -18,7 +18,10 @@ public:
 	// Composition
 	VertexAttribute();
 	VertexAttribute(const std::string name, eVertexAttributeDataType type, int elementCount, bool normalize, size_t offset);
+	VertexAttribute(const VertexAttribute& other);
 	~VertexAttribute();
+
+	void operator=(const VertexAttribute& other);
 
 
 	// Comparison
@@ -41,11 +44,11 @@ public:
 
 
 private:
-	std::string m_name; // POSITION, COLOR, UV // This is a std::string as its used for its string value
+	std::string m_name = ""; // POSITION, COLOR, UV // This is a std::string as its used for its string value
 
-	eVertexAttributeDataType m_type;
-	int m_elementCount; // How many floats, ints, etc
-	bool m_isNormalized;
+	eVertexAttributeDataType m_type = VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT;
+	int m_elementCount = 0; // How many floats, ints, etc
+	bool m_isNormalized = false;
 
-	int m_memberOffsetBytes;
+	int m_memberOffsetBytes = -1;
 };

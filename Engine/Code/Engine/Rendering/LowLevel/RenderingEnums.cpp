@@ -752,6 +752,64 @@ eStencilOp GetStencilOpFromString(const HashedString& string, eStencilOp default
 
 
 // -----------------------------------------------------------------
+// Buffer Usage
+// -----------------------------------------------------------------
+D3D11_USAGE ConvertToD3D11BufferUsage(eBufferUsage bufferUsage)
+{
+	D3D11_USAGE d3dUsage = D3D11_USAGE_DEFAULT;
+
+	switch(bufferUsage)
+	{
+	case BUFFER_USAGE_DEFAULT:
+	{
+		d3dUsage = D3D11_USAGE_DEFAULT;
+		break;
+	}
+	case BUFFER_USAGE_IMMUTABLE:
+	{
+		d3dUsage = D3D11_USAGE_IMMUTABLE;
+		break;
+	}
+	case BUFFER_USAGE_DYNAMIC:
+	{
+		d3dUsage = D3D11_USAGE_DYNAMIC;
+		break;
+	}
+	case BUFFER_USAGE_STAGING:
+	{
+		d3dUsage = D3D11_USAGE_STAGING;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return d3dUsage;
+}
+
+
+
+// -----------------------------------------------------------------
+// Wrap Mode
+// -----------------------------------------------------------------
+uint GetCPUAccessFlagsForUsage(eBufferUsage usage)
+{
+	uint flags = 0;
+
+	if (usage == BUFFER_USAGE_DYNAMIC)
+	{
+		flags = D3D11_CPU_ACCESS_WRITE;
+	}
+	else if (usage == BUFFER_USAGE_STAGING)
+	{
+		flags = D3D11_CPU_ACCESS_WRITE | D3D11_CPU_ACCESS_READ;
+	}
+
+	return flags;
+}
+
+
+// -----------------------------------------------------------------
 // Wrap Mode
 // -----------------------------------------------------------------
 static HashedString WRAP_MODE_NAMES[] = 
@@ -825,4 +883,114 @@ eWrapMode GetWrapModeFromString(const HashedString& string, eWrapMode defaultVal
 
 
 	return wrapMode;
+}
+
+
+
+// -----------------------------------------------------------------
+// Texture Format
+// -----------------------------------------------------------------
+DXGI_FORMAT ConvertToD3D11Format(TextureFormat textureFormat)
+{
+	DXGI_FORMAT dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
+	switch(textureFormat)
+	{
+	case TEXTURE_FORMAT_RGBA:
+	{
+		dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	}
+	case TEXTURE_FORMAT_SRGBA:
+	{
+		dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+		break;
+	}
+	case TEXTURE_FORMAT_D24S8:
+	{
+		dxgiFormat = DXGI_FORMAT_R24G8_TYPELESS;
+		break;
+	}
+	case TEXTURE_FORMAT_RGBA16F:
+	{
+		dxgiFormat = DXGI_FORMAT_R16G16B16A16_FLOAT;
+		break;
+	}
+	case TEXTURE_FORMAT_RGBA32F:
+	{
+		dxgiFormat = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return dxgiFormat;
+}
+
+
+TextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat)
+{
+	TextureFormat format = TEXTURE_FORMAT_SRGBA;
+
+	switch(dxgiFormat)
+	{
+	case DXGI_FORMAT_R8G8B8A8_UNORM:
+	{
+		format = TEXTURE_FORMAT_RGBA;
+		break;
+	}
+	case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+	{
+		format = TEXTURE_FORMAT_SRGBA;
+		break;
+	}
+	case DXGI_FORMAT_R24G8_TYPELESS:
+	{
+		format = TEXTURE_FORMAT_D24S8;
+		break;
+	}
+	case DXGI_FORMAT_R16G16B16A16_FLOAT:
+	{
+		format = TEXTURE_FORMAT_RGBA16F;
+		break;
+	}
+	case DXGI_FORMAT_R32G32B32A32_FLOAT:
+	{
+		format = TEXTURE_FORMAT_RGBA32F;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return format;
+}
+
+
+
+// -----------------------------------------------------------------
+// Primitive Topology
+// -----------------------------------------------------------------
+D3D_PRIMITIVE_TOPOLOGY ConvertToD3D11Topology(ePrimitiveTopology topology)
+{
+	D3D_PRIMITIVE_TOPOLOGY d3dTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	switch(topology)
+	{
+	case PRIMITIVE_TOPOLOGY_TRIANGLES:
+	{
+		d3dTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+		break;
+	}
+	case PRIMITIVE_TOPOLOGY_LINES:
+	{
+		d3dTopology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return d3dTopology;
 }

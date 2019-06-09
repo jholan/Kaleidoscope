@@ -22,7 +22,7 @@ public:
 
 	eBlendOp	 alphaBlendOp = BLEND_OP_ADD;
 	eBlendFactor alphaSrcFactor = BLEND_FACTOR_ONE;
-	eBlendFactor alphaDstFactor = BLEND_FACTOR_ONE;
+	eBlendFactor alphaDstFactor = BLEND_FACTOR_ZERO;
 };
 
 

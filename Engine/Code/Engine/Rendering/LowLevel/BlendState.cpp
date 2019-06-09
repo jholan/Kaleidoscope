@@ -116,6 +116,8 @@ void BlendState::SetDescription(const BlendStateDescription& description)
 	blendStateDescription.RenderTarget[0].SrcBlendAlpha = ConvertToD3D11BlendFactor(m_description.alphaSrcFactor);
 	blendStateDescription.RenderTarget[0].DestBlendAlpha = ConvertToD3D11BlendFactor(m_description.alphaDstFactor);
 
+	blendStateDescription.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
 
 	// Create the blend state from the description we just filled out.
 	HRESULT hr = m_device->GetD3D11Device()->CreateBlendState(&blendStateDescription, &m_handle);

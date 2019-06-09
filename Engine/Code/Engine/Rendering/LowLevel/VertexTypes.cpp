@@ -55,7 +55,7 @@ static void ConvertToPCU(const VertexBuilder* src, void* dst, uint count)
 const VertexAttribute Vertex_PCU::LAYOUT_ELEMENTS[] = 
 {
 	VertexAttribute("POSITION",    VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 3, false, offsetof(Vertex_PCU, m_position)),
-	VertexAttribute("COLOR",       VERTEX_ATTRIBUTE_DATA_TYPE_BYTE,  4, true,  offsetof(Vertex_PCU, m_color)),
+	VertexAttribute("COLOR",       VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 4, true,  offsetof(Vertex_PCU, m_color)),
 	VertexAttribute("UV",          VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 2, false, offsetof(Vertex_PCU, m_UVs)),
 	VertexAttribute::GetTerminatingAttribute()
 };
@@ -116,8 +116,8 @@ static void ConvertToPCUTBN(const VertexBuilder* src, void* dst, uint count)
 
 const VertexAttribute Vertex_PCUTBN::LAYOUT_ELEMENTS[] = 
 {
-	VertexAttribute("POSITION",		VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 3, false, offsetof(Vertex_PCU, m_position)),
-	VertexAttribute("COLOR",		VERTEX_ATTRIBUTE_DATA_TYPE_BYTE,  4, true,  offsetof(Vertex_PCU, m_color)),
+	VertexAttribute("POSITION",		VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 3, false, offsetof(Vertex_PCU,	m_position)),
+	VertexAttribute("COLOR",		VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 4, true,  offsetof(Vertex_PCU,	m_color)),
 	VertexAttribute( "NORMAL",		VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 3, false, offsetof(Vertex_PCUTBN, m_normal) ),
 	VertexAttribute( "UV",			VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 2, false, offsetof(Vertex_PCUTBN, m_UVs) ),
 	VertexAttribute( "TANGENT",		VERTEX_ATTRIBUTE_DATA_TYPE_FLOAT, 4, false, offsetof(Vertex_PCUTBN, m_tangent) ),

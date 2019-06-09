@@ -9,6 +9,8 @@
 #include "Engine/Rendering/LowLevel/RHIInstance.hpp"
 #include "Engine/Rendering/LowLevel/RHIDevice.hpp"
 #include "Engine/Rendering/Window.hpp"
+#include "Engine/Rendering/LowLevel/Texture2D.hpp"
+#include "Engine/Rendering/LowLevel/ResourceView.hpp"
 
 
 
@@ -74,6 +76,23 @@ void RHIOutput::Initialize(RHIInstance* instance, RHIDevice* device, Window* win
 
 	// Disable alt+enter to enter/leave full screen mode
 	instance->GetFactory()->MakeWindowAssociation((HWND)window->GetHandle(), DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER);
+
+
+	// Get the back buffers texture
+	ID3D11Texture2D* backbufferTextureHandle = nullptr;
+	hr = m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backbufferTextureHandle);
+	GUARANTEE_OR_DIE(hr == S_OK, "Could not get back buffer texture handle");
+
+
+	// Create a texture for it
+	Texture2DDescription backbufferDescription2;
+	backbufferDescription2.format = ConvertToFormat(backbufferDescription.Format);
+	backbufferDescription2.dimensions = ivec2(backbufferDescription.Width, backbufferDescription.Height);
+	m_backbuffer = new Texture2D(m_device, backbufferDescription2, backbufferTextureHandle);
+
+
+	// Create a view for it
+	m_backbufferRTV = new RenderTargetView(m_device, m_backbuffer);
 }
 
 
@@ -83,5 +102,23 @@ void RHIOutput::Destroy()
 	m_device = nullptr;
 	m_window = nullptr;
 
+	delete m_backbufferRTV;
+	m_backbufferRTV = nullptr;
+
+	delete m_backbuffer;
+	m_backbuffer = nullptr;
+
 	ReleaseCOMHandle(m_swapChain);
+}
+
+
+void RHIOutput::Present()
+{
+	m_swapChain->Present(1, 0);
+}
+
+
+RenderTargetView* RHIOutput::GetBackBufferRTV() const
+{
+	return m_backbufferRTV;
 }

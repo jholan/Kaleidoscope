@@ -6,9 +6,20 @@
 
 #include "Engine/__Control/__Control.hpp"
 
+#include "Engine/Core/EngineCommon.hpp"
 #include "Engine/Core/ErrorWarningAssert.hpp"
 
 #include "Engine/Rendering/LowLevel/RHIInstance.hpp"
+#include "Engine/Rendering/LowLevel/VertexTypes.hpp"
+#include "Engine/Rendering/LowLevel/VertexLayout.hpp"
+#include "Engine/Rendering/LowLevel/VertexBuffer.hpp"
+#include "Engine/Rendering/LowLevel/ShaderProgramStage.hpp"
+#include "Engine/Rendering/LowLevel/ShaderProgram.hpp"
+#include "Engine/Rendering/LowLevel/RasterizerState.hpp"
+#include "Engine/Rendering/LowLevel/BlendState.hpp"
+#include "Engine/Rendering/LowLevel/DepthStencilState.hpp"
+#include "Engine/Rendering/LowLevel/FrameBuffer.hpp"
+#include "Engine/Rendering/LowLevel/ResourceView.hpp"
 
 
 
@@ -55,13 +66,380 @@ void RHIDevice::Initialize(RHIInstance* instance, const VideoCardDescription& vi
 										&m_deviceContext
 									);
 	GUARANTEE_OR_DIE(hr == S_OK, "Could not create D3D11 device: Missing D3D 11.1 runtime");
+
+
+	// Validate all of the vertex layouts
+	ValidateVertexLayouts();
+}
+
+
+void RHIDevice::ValidateVertexLayouts()
+{
+	ValidateVertexLayout(Vertex_PCU::GetLayout(), "Data/Assets/Shaders/VertexLayoutStub_PCU.vs");
+	ValidateVertexLayout(Vertex_PCUTBN::GetLayout(), "Data/Assets/Shaders/VertexLayoutStub_PCUTBN.vs");
+}
+
+
+void RHIDevice::ValidateVertexLayout(const VertexLayout* layout, const std::string& filepath)
+{
+	ShaderProgramStage* vertexShaderStage = new ShaderProgramStage(this);
+	vertexShaderStage->LoadFromFile(filepath);
+
+	ID3D11InputLayout* d3dInputLayout = CreateD3D11InputLayout(this, vertexShaderStage->GetByteCode(), vertexShaderStage->GetByteCodeSizeBytes(), layout);
+
+	if (d3dInputLayout != nullptr)
+	{
+		m_validLayouts.push_back(VertexLayoutPair(layout, d3dInputLayout));
+	}
+
+	delete vertexShaderStage;
+
 }
 
 
 void RHIDevice::Destroy()
 {
+	DestroyVertexLayouts();
+
 	ReleaseCOMHandle(m_device);
 	ReleaseCOMHandle(m_deviceContext);
+}
+
+
+void RHIDevice::DestroyVertexLayouts()
+{
+	for (int i = 0; i < (int)m_validLayouts.size(); ++i)
+	{
+		ReleaseCOMHandle(m_validLayouts[i].second);
+	}
+	m_validLayouts.clear();
+}
+
+
+
+// -----------------------------------------------------------------
+// Context
+// IA
+// -----------------------------------------------------------------
+void RHIDevice::SetPrimitiveTopology(ePrimitiveTopology topology)
+{
+	D3D_PRIMITIVE_TOPOLOGY d3dTopology = ConvertToD3D11Topology(topology);
+	m_deviceContext->IASetPrimitiveTopology(d3dTopology);
+}
+
+
+ID3D11InputLayout* RHIDevice::FindD3D11VertexLayout(const VertexLayout* vertexLayout) const
+{
+	ID3D11InputLayout* d3dLayout = nullptr;
+
+	for (int i = 0; i < (int)m_validLayouts.size(); ++i)
+	{
+		if (vertexLayout == m_validLayouts[i].first)
+		{
+			d3dLayout = m_validLayouts[i].second;
+		}
+	}
+
+	return d3dLayout;
+}
+
+
+void RHIDevice::BindVertexLayout(const VertexLayout* vertexLayout) const
+{
+	ID3D11InputLayout* d3dLayout = FindD3D11VertexLayout(vertexLayout);
+	VerifyPointer((void*)d3dLayout);
+
+	m_deviceContext->IASetInputLayout(d3dLayout);
+}
+
+
+void RHIDevice::UnbindVertexLayout() const
+{
+	m_deviceContext->IASetInputLayout(NULL);
+}
+
+
+void RHIDevice::BindVertexBuffer(const VertexBuffer* vertexBuffer) const
+{
+	VerifyPointer((void*)vertexBuffer);
+
+	ID3D11Buffer* vbArray = vertexBuffer->GetHandle();
+	uint elementSizeArray = vertexBuffer->GetElementSizeBytes();
+	uint offsetArray = 0;
+	m_deviceContext->IASetVertexBuffers(0, 1, &vbArray, &elementSizeArray, &offsetArray);
+}
+
+
+void RHIDevice::UnbindVertexBuffer() const
+{
+	ID3D11Buffer* vbArray = nullptr;
+	uint elementSizeArray = 0;
+	uint offsetArray = 0;
+	m_deviceContext->IASetVertexBuffers(0, 1, &vbArray, &elementSizeArray, &offsetArray);
+}
+
+
+
+// -----------------------------------------------------------------
+// Context
+// Programmable
+// -----------------------------------------------------------------
+void RHIDevice::BindShaderProgram(const ShaderProgram* shaderProgram) const
+{
+	VerifyPointer((void*)shaderProgram);
+
+	BindVertexShaderStage(shaderProgram->GetStage(SHADER_STAGE_VERTEX));
+	BindHullShaderStage(shaderProgram->GetStage(SHADER_STAGE_HULL));
+	BindDomainShaderStage(shaderProgram->GetStage(SHADER_STAGE_DOMAIN));
+	BindGeometryShaderStage(shaderProgram->GetStage(SHADER_STAGE_GEOMETRY));
+	BindFragmentShaderStage(shaderProgram->GetStage(SHADER_STAGE_FRAGMENT));
+
+	BindComputeShaderStage(shaderProgram->GetStage(SHADER_STAGE_COMPUTE));
+}
+
+
+void RHIDevice::BindVertexShaderStage(const ShaderProgramStage* vertexShaderStage) const
+{
+	if (vertexShaderStage == nullptr)
+	{
+		UnbindVertexShaderStage();
+	}
+	else
+	{
+		m_deviceContext->VSSetShader((ID3D11VertexShader*)vertexShaderStage->GetHandle(), NULL, 0);
+	}
+
+}
+
+
+void RHIDevice::BindHullShaderStage(const ShaderProgramStage* hullShaderStage) const
+{
+	if (hullShaderStage == nullptr)
+	{
+		UnbindHullShaderStage();
+	}
+	else
+	{
+		m_deviceContext->HSSetShader((ID3D11HullShader*)hullShaderStage->GetHandle(), NULL, 0);
+	}
+}
+
+
+void RHIDevice::BindDomainShaderStage(const ShaderProgramStage* domainShaderStage) const
+{
+	if (domainShaderStage == nullptr)
+	{
+		UnbindDomainShaderStage();
+	}
+	else
+	{
+		m_deviceContext->DSSetShader((ID3D11DomainShader*)domainShaderStage->GetHandle(), NULL, 0);
+	}
+}
+
+
+void RHIDevice::BindGeometryShaderStage(const ShaderProgramStage* geometryShaderStage) const
+{
+	if (geometryShaderStage == nullptr)
+	{
+		UnbindGeometryShaderStage();
+	}
+	else
+	{
+		m_deviceContext->GSSetShader((ID3D11GeometryShader*)geometryShaderStage->GetHandle(), NULL, 0);
+	}
+}
+
+
+void RHIDevice::BindFragmentShaderStage(const ShaderProgramStage* fragmentShaderStage) const
+{
+	if (fragmentShaderStage == nullptr)
+	{
+		UnbindFragmentShaderStage();
+	}
+	else
+	{
+		m_deviceContext->PSSetShader((ID3D11PixelShader*)fragmentShaderStage->GetHandle(), NULL, 0);
+	}
+}
+
+
+void RHIDevice::BindComputeShaderStage(const ShaderProgramStage* computeShaderStage) const
+{
+	if (computeShaderStage == nullptr)
+	{
+		UnbindComputeShaderStage();
+	}
+	else
+	{
+		m_deviceContext->CSSetShader((ID3D11ComputeShader*)computeShaderStage->GetHandle(), NULL, 0);
+	}
+}
+
+
+void RHIDevice::UnbindShaderProgram() const
+{
+	UnbindVertexShaderStage();
+	UnbindHullShaderStage();
+	UnbindDomainShaderStage();
+	UnbindGeometryShaderStage();
+	UnbindFragmentShaderStage();
+	
+	UnbindComputeShaderStage();
+}
+
+
+void RHIDevice::UnbindVertexShaderStage() const
+{
+	m_deviceContext->VSSetShader(NULL, NULL, 0);
+}
+
+
+void RHIDevice::UnbindHullShaderStage() const
+{
+	m_deviceContext->HSSetShader(NULL, NULL, 0);
+}
+
+
+void RHIDevice::UnbindDomainShaderStage() const
+{
+	m_deviceContext->DSSetShader(NULL, NULL, 0);
+}
+
+
+void RHIDevice::UnbindGeometryShaderStage() const
+{
+	m_deviceContext->GSSetShader(NULL, NULL, 0);
+}
+
+
+void RHIDevice::UnbindFragmentShaderStage() const
+{
+	m_deviceContext->PSSetShader(NULL, NULL, 0);
+}
+
+
+void RHIDevice::UnbindComputeShaderStage() const
+{
+	m_deviceContext->CSSetShader(NULL, NULL, 0);
+}
+
+
+
+// -----------------------------------------------------------------
+// Context
+// RS
+// -----------------------------------------------------------------
+void RHIDevice::BindRasterizerState(const RasterizerState* rasterizerState) const
+{
+	VerifyPointer((void*)rasterizerState);
+	m_deviceContext->RSSetState(rasterizerState->GetHandle());
+}
+
+
+void RHIDevice::UnbindRasterizerState() const
+{
+	m_deviceContext->RSSetState(NULL);
+}
+
+
+// This is addressed with (0,0) being the bottom left corner
+// Canvas height is the height of the conceptual "thing" you are drawing to ie: window, texture, etc...
+//	used to convert from lower left origin to upper left origin
+void RHIDevice::SetViewport(const vec2& lowerLeft, const vec2& upperRight, float canvasHeight) const
+{
+	vec2 upperLeft = vec2(0.0f, 0.0f);
+	upperLeft.x = lowerLeft.x;
+	upperLeft.y = canvasHeight - upperRight.y;
+
+	float width = upperRight.x - lowerLeft.x;
+	float height = upperRight.y - lowerLeft.y;
+
+	D3D11_VIEWPORT viewport;
+	viewport.Width = width;
+	viewport.Height = height;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	viewport.TopLeftX = upperLeft.x;
+	viewport.TopLeftY = upperLeft.y;
+
+	m_deviceContext->RSSetViewports(1, &viewport);
+}
+
+
+
+// -----------------------------------------------------------------
+// Context
+// OM
+// -----------------------------------------------------------------
+void RHIDevice::BindBlendState(const BlendState* blendState) const
+{
+	VerifyPointer((void*)blendState);
+	m_deviceContext->OMSetBlendState(blendState->GetHandle(), NULL, 0xffffffff);
+}
+
+
+void RHIDevice::UnbindBlendState() const
+{
+	m_deviceContext->OMSetBlendState(NULL, NULL, 0xffffffff);
+}
+
+
+void RHIDevice::BindDepthStencilState(const DepthStencilState* depthStencilState) const
+{
+	VerifyPointer((void*)depthStencilState);
+	m_deviceContext->OMSetDepthStencilState(depthStencilState->GetHandle(), depthStencilState->GetStencilReferenceValue());
+}
+
+
+void RHIDevice::UnbindDepthStencilState() const
+{
+	m_deviceContext->OMSetDepthStencilState(NULL, 0);
+}
+
+
+void RHIDevice::BindFrameBuffer(const FrameBuffer* framebuffer) const
+{
+	VerifyPointer((void*)framebuffer);
+
+	// Get all rtv handles
+	ID3D11RenderTargetView* rtvHandles[MAX_NUM_RENDER_TARGETS];
+	for (int i = 0; i < MAX_NUM_RENDER_TARGETS; ++i)
+	{
+		const RenderTargetView* rtv = framebuffer->GetRenderTarget(i);
+		if (rtv != nullptr)
+		{
+			rtvHandles[i] = rtv->GetHandle(); 
+		}
+		else
+		{
+			rtvHandles[i] = nullptr;
+		}
+	}
+
+	m_deviceContext->OMSetRenderTargets(1, rtvHandles, NULL);
+}
+
+
+void RHIDevice::UnbindFrameBuffer() const
+{
+	m_deviceContext->OMSetRenderTargets(0, NULL, NULL);
+}
+
+
+
+// -----------------------------------------------------------------
+// Invocation
+// -----------------------------------------------------------------
+void RHIDevice::Draw(uint vertexCount, uint offset)
+{
+	m_deviceContext->Draw(vertexCount, offset);
+}
+
+
+void RHIDevice::DrawIndexed(uint indexCount, uint offset)
+{
+	m_deviceContext->DrawIndexed(indexCount, offset, 0);
 }
 
 

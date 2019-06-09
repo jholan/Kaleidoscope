@@ -70,6 +70,12 @@ eCompareOp DepthStencilState::GetDepthCompareOp() const
 }
 
 
+uint DepthStencilState::GetStencilReferenceValue() const
+{
+	return m_stencilDescription.referenceValue;
+}
+
+
 
 // -----------------------------------------------------------------
 // State Manipulation

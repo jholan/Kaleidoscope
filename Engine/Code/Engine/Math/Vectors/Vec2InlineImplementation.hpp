@@ -2,6 +2,7 @@
 #include "Engine/Math/Vectors/Vec2.hpp"
 
 #include "Engine/Math/MathUtils.hpp"
+#include "Engine/Math/Vectors/IVec2.hpp"
 
 
 
@@ -17,6 +18,14 @@ vec2::vec2()
 vec2::vec2(float initialX, float initialY)
 	: x(initialX)
 	, y(initialY)
+{
+
+}
+
+
+vec2::vec2(const ivec2& vec)
+	: x((float)vec.x)
+	, y((float)vec.y)
 {
 
 }

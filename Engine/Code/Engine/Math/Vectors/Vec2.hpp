@@ -1,5 +1,7 @@
 #pragma once
 
+class ivec2;
+
 
 
 class vec2
@@ -8,6 +10,7 @@ public:
 	// Composition
 	inline vec2();
 	inline explicit vec2(float x, float y);
+	inline explicit vec2(const ivec2& vec);
 	inline ~vec2();
 
 

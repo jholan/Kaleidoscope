@@ -95,6 +95,13 @@
     <ClInclude Include="Rendering\LowLevel\ShaderProgramStage.hpp" />
     <ClInclude Include="FileSystem\FileUtils.hpp" />
     <ClInclude Include="Rendering\LowLevel\ShaderProgram.hpp" />
+    <ClInclude Include="Rendering\LowLevel\VertexBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RHIResource.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RHIViewableResource.hpp" />
+    <ClInclude Include="Rendering\LowLevel\Texture.hpp" />
+    <ClInclude Include="Rendering\LowLevel\Texture2D.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ResourceView.hpp" />
+    <ClInclude Include="Rendering\LowLevel\FrameBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -215,6 +222,18 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\ShaderProgram.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\VertexBuffer.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\Texture2D.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\RenderTargetView.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\FrameBuffer.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

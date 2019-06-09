@@ -43,41 +43,41 @@ GPUBufferDescription GPUBuffer::GetDescription() const
 // -----------------------------------------------------------------
 void GPUBuffer::SetDescription(const GPUBufferDescription& description, void* data)
 {
-	//// Cache description
-	//m_description = description;
-	//
-	//
-	//// Release the d3d11 handle if it exists
-	//ReleaseCOMHandle(m_handle);
-	//
-	//
-	//// Fill the d3d11 buffer description
-	//D3D11_BUFFER_DESC bufferDescription;
-	//bufferDescription.ByteWidth				= m_description.bufferSizeBytes;
-	//bufferDescription.Usage					= ConvertToD3D11BufferUsage(m_description.usage);
-	//bufferDescription.BindFlags				= ConvertToD3D11BufferBindPointFlags(m_description.bindPointFlags);
-	//bufferDescription.CPUAccessFlags		= ConvertToD3D11ResourceCPUAccessFlags(m_description.cpuAccessFlags);
-	//bufferDescription.MiscFlags				= ConvertToD3D11BufferMiscFlags(m_description.miscFlags);
-	//bufferDescription.StructureByteStride	= m_description.structuredBufferElementSizeBytes;
-	//
-	//// A shit way of passing NULL if data == nullptr
-	//HRESULT hr = S_OK;
-	//if (data != nullptr)
-	//{
-	//	D3D11_SUBRESOURCE_DATA bufferData;
-	//	bufferData.pSysMem			= data;
-	//	bufferData.SysMemPitch		= 0;
-	//	bufferData.SysMemSlicePitch = 0;
-	//
-	//	// Create the gpu buffer with initial data
-	//	HRESULT hr = m_device->GetD3D11Device()->CreateBuffer(&bufferDescription, &bufferData, &m_handle);
-	//}
-	//else
-	//{
-	//	// Create the gpu buffer
-	//	HRESULT hr = m_device->GetD3D11Device()->CreateBuffer(&bufferDescription, NULL, &m_handle);
-	//}
-	//GUARANTEE_OR_DIE(hr == S_OK, "GPUBuffer::Initialize failed to create buffer");
+	// Cache description
+	m_description = description;
+	
+	
+	// Release the d3d11 handle if it exists
+	ReleaseCOMHandle(m_handle);
+	
+	
+	// Fill the d3d11 buffer description
+	D3D11_BUFFER_DESC bufferDescription;
+	bufferDescription.ByteWidth				= m_description.elementCount * m_description.elementSizeBytes;
+	bufferDescription.Usage					= ConvertToD3D11BufferUsage(m_description.usage);
+	bufferDescription.BindFlags				= ConvertToD3D11BufferBindPointFlags(m_description.bindPointFlags);
+	bufferDescription.CPUAccessFlags		= ConvertToD3D11ResourceCPUAccessFlags(m_description.cpuAccessFlags);
+	bufferDescription.MiscFlags				= ConvertToD3D11BufferMiscFlags(m_description.miscFlags);
+	bufferDescription.StructureByteStride	= 0;
+	
+	// A shit way of passing NULL if data == nullptr
+	HRESULT hr = S_OK;
+	if (data != nullptr)
+	{
+		D3D11_SUBRESOURCE_DATA bufferData;
+		bufferData.pSysMem			= data;
+		bufferData.SysMemPitch		= 0;
+		bufferData.SysMemSlicePitch = 0;
+	
+		// Create the gpu buffer with initial data
+		HRESULT hr = m_device->GetD3D11Device()->CreateBuffer(&bufferDescription, &bufferData, &m_handle);
+	}
+	else
+	{
+		// Create the gpu buffer
+		HRESULT hr = m_device->GetD3D11Device()->CreateBuffer(&bufferDescription, NULL, &m_handle);
+	}
+	GUARANTEE_OR_DIE(hr == S_OK, "GPUBuffer::Initialize failed to create buffer");
 }
 
 

@@ -21,9 +21,29 @@ VertexAttribute::VertexAttribute(const std::string name, eVertexAttributeDataTyp
 }
 
 
+VertexAttribute::VertexAttribute(const VertexAttribute& other)
+{
+	m_name = other.m_name;
+	m_type = other.m_type;
+	m_elementCount = other.m_elementCount;
+	m_isNormalized = other.m_isNormalized;
+	m_memberOffsetBytes = other.m_memberOffsetBytes;
+}
+
+
 VertexAttribute::~VertexAttribute()
 {
 
+}
+
+
+void VertexAttribute::operator=(const VertexAttribute& other)
+{
+	m_name = other.m_name;
+	m_type = other.m_type;
+	m_elementCount = other.m_elementCount;
+	m_isNormalized = other.m_isNormalized;
+	m_memberOffsetBytes = other.m_memberOffsetBytes;
 }
 
 

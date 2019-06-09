@@ -70,6 +70,8 @@ public:
 	bool WritesDepth() const;
 	eCompareOp GetDepthCompareOp() const;
 
+	uint GetStencilReferenceValue() const;
+
 
 	// State Manipulation
 	void SetDescriptions(const DepthStateDescription& depthDesc, const StencilStateDescription& stencilDesc);

@@ -122,7 +122,7 @@ enum eBufferUsage
 D3D11_USAGE			ConvertToD3D11BufferUsage(eBufferUsage bufferUsage);
 HashedString		GetBufferUsageName(eBufferUsage bufferUsage);
 eBufferUsage		GetBufferUsageFromString(const HashedString& string, eBufferUsage defaultValue = BUFFER_USAGE_DEFAULT);
-
+uint				GetCPUAccessFlagsForUsage(eBufferUsage usage);
 
 
 enum eBufferBindPointFlag
@@ -165,3 +165,25 @@ enum eWrapMode
 D3D11_TEXTURE_ADDRESS_MODE	ConvertToD3D11WrapMode(eWrapMode wrapMode);
 HashedString				GetWrapModeName(eWrapMode wrapMode);
 eWrapMode					GetWrapModeFromString(const HashedString& string, eWrapMode defaultValue = WRAP_MODE_REPEAT);
+
+
+
+enum TextureFormat
+{
+	TEXTURE_FORMAT_RGBA = 0,
+	TEXTURE_FORMAT_SRGBA,
+	TEXTURE_FORMAT_D24S8,
+	TEXTURE_FORMAT_RGBA16F,
+	TEXTURE_FORMAT_RGBA32F
+};
+DXGI_FORMAT ConvertToD3D11Format(TextureFormat format);
+TextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat);
+
+
+
+enum ePrimitiveTopology
+{
+	PRIMITIVE_TOPOLOGY_TRIANGLES,
+	PRIMITIVE_TOPOLOGY_LINES
+};
+D3D_PRIMITIVE_TOPOLOGY ConvertToD3D11Topology(ePrimitiveTopology topology);

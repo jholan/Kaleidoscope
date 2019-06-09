@@ -12,7 +12,15 @@
 #include "Engine/Rendering/LowLevel/RHIInstance.hpp"
 #include "Engine/Rendering/LowLevel/RHIDevice.hpp"
 #include "Engine/Rendering/LowLevel/RHIOutput.hpp"
+#include "Engine/Rendering/LowLevel/DepthStencilState.hpp"
+#include "Engine/Rendering/LowLevel/BlendState.hpp"
+#include "Engine/Rendering/LowLevel/RasterizerState.hpp"
+#include "Engine/Rendering/LowLevel/ShaderProgram.hpp"
+#include "Engine/Rendering/LowLevel/ShaderProgramStage.hpp"
 #include "Engine/Rendering/LowLevel/GPUBuffer.hpp"
+#include "Engine/Rendering/LowLevel/FrameBuffer.hpp"
+#include "Engine/Rendering/LowLevel/VertexBuffer.hpp"
+#include "Engine/Rendering/LowLevel/VertexTypes.hpp"
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
@@ -28,22 +36,35 @@ void App::Initialize()
 	g_theWindow->Initialize(g_theBlackboard->GetValue("Window.AppName", "Main Window"), g_theBlackboard->GetValue("Window.Resolution.Width", 100), g_theBlackboard->GetValue("Window.Resolution.Height", 100));
 	g_theWindow->RegisterMemberCallback(this, &App::HandleXOut);
 
-	RHIInstance rhii;
-	rhii.Initialize();
-	RHIDevice rhid;
-	rhid.Initialize(&rhii, rhii.GetVideoCard(0));
-	RHIOutput rhio;
-	rhio.Initialize(&rhii, &rhid, g_theWindow);
-
 	
-	rhio.Destroy();
-	rhid.Destroy();
-	rhii.Destroy();
+	// Rendering Test
+	g_theInstance = new RHIInstance();
+	g_theInstance->Initialize();
+
+	g_theDevice = new RHIDevice();
+	g_theDevice->Initialize(g_theInstance, g_theInstance->GetVideoCard(0));
+
+	g_theOutput = new RHIOutput();
+	g_theOutput->Initialize(g_theInstance, g_theDevice, g_theWindow);
 }
 
 
 void App::Destroy()
 {
+	// Rendering Test
+	g_theOutput->Destroy();
+	delete g_theOutput;
+	g_theOutput = nullptr;
+
+	g_theDevice->Destroy();
+	delete g_theDevice;
+	g_theDevice = nullptr;
+
+	g_theInstance->Destroy();
+	delete g_theInstance;
+	g_theInstance = nullptr;
+
+
 	// Destroy for subsystems
 	g_theWindow->Destroy();
 	delete g_theWindow;
@@ -105,6 +126,71 @@ void App::Update()
 void App::Render() const
 {
 	// Render for subsystems
+
+	// Rendering test
+	DepthStateDescription dsd;
+	dsd.writeDepth = false;
+	DepthStencilState* depthStencilState = new DepthStencilState(g_theDevice, DepthStateDescription(), StencilStateDescription());
+	BlendStateDescription bsd;
+	bsd.colorSrcFactor = BLEND_FACTOR_SOURCE_COLOR;
+	bsd.alphaSrcFactor = BLEND_FACTOR_SOURCE_ALPHA;
+	BlendState* blendState = new BlendState(g_theDevice, bsd);
+	RasterizerStateDescription rsd;
+	rsd.cullMode = CULL_BACK;
+	RasterizerState* rasterizerState = new RasterizerState(g_theDevice, rsd);
+	ShaderProgram* shaderProgram = new ShaderProgram(g_theDevice);
+	shaderProgram->LoadFromFiles("Data/Assets/Shaders/test.vs", "", "", "", "Data/Assets/Shaders/test.fs", "");
+	FrameBuffer* framebuffer = new FrameBuffer(g_theDevice);
+	framebuffer->SetRenderTarget(0, g_theOutput->GetBackBufferRTV());
+
+	Vertex_PCU verts[] = 
+	{
+		Vertex_PCU(vec3(-1,-1,0), rgba(1,0,0), vec2(0,0)),
+		Vertex_PCU(vec3( 1,-1,0), rgba(0,1,0), vec2(1,0)),
+		Vertex_PCU(vec3( 1, 1,0), rgba(0,0,1), vec2(1,1)),
+
+		Vertex_PCU(vec3(-1,-1,0), rgba(1,0,0), vec2(0,0)),
+		Vertex_PCU(vec3( 1, 1,0), rgba(0,0,1), vec2(1,1)),
+		Vertex_PCU(vec3(-1, 1,0), rgba(0,0,1), vec2(0,1))
+	};
+	VertexBufferDescription vbd;
+	vbd.usage = BUFFER_USAGE_IMMUTABLE;
+	vbd.elementCount = sizeof(verts) / sizeof(Vertex_PCU);
+	vbd.elementSizeBytes = sizeof(Vertex_PCU);
+	vbd.allowStreamOut = false;
+	VertexBuffer* vertexBuffer = new VertexBuffer(g_theDevice, vbd, verts);
+
+
+	g_theDevice->BindFrameBuffer(framebuffer);
+
+	// IA
+	g_theDevice->SetPrimitiveTopology(PRIMITIVE_TOPOLOGY_TRIANGLES);
+	g_theDevice->BindVertexLayout(Vertex_PCU::GetLayout());
+	g_theDevice->BindVertexBuffer(vertexBuffer);
+
+	// Prog
+	g_theDevice->BindShaderProgram(shaderProgram);
+
+	// RS
+	g_theDevice->BindRasterizerState(rasterizerState);
+	g_theDevice->SetViewport(vec2(0.0f, 0.0f), vec2(g_theWindow->GetDimensions()), (float)g_theWindow->GetDimensions().y);
+
+	// OM
+	g_theDevice->BindDepthStencilState(depthStencilState);
+	g_theDevice->BindBlendState(blendState);
+
+	// Evoc
+	g_theDevice->Draw(vbd.elementCount, 0);
+
+	// Flip
+	g_theOutput->Present();
+
+	delete vertexBuffer;
+	delete framebuffer;
+	delete shaderProgram;
+	delete depthStencilState;
+	delete blendState;
+	delete rasterizerState;
 }
 
 
