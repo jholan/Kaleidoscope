@@ -159,6 +159,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdParty\IMGUI\imconfig.h" />
+    <ClInclude Include="3rdParty\IMGUI\imgui.h" />
+    <ClInclude Include="3rdParty\IMGUI\imgui_internal.h" />
+    <ClInclude Include="3rdParty\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="3rdParty\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="3rdParty\IMGUI\imstb_truetype.h" />
     <ClInclude Include="3rdParty\MikkT\mikktspace.h" />
     <ClInclude Include="3rdParty\STB\stb_image.h" />
     <ClInclude Include="3rdParty\STB\stb_image_write.h" />
@@ -246,6 +252,9 @@
     <ClInclude Include="__Control\__Control.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdParty\IMGUI\imgui.cpp" />
+    <ClCompile Include="3rdParty\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="3rdParty\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="3rdParty\MikkT\mikktspace.c" />
     <ClCompile Include="3rdParty\STB\stb_image.c" />
     <ClCompile Include="3rdParty\TinyXML2\tinyxml2.cpp" />
