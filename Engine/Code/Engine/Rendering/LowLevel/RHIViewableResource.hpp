@@ -9,6 +9,4 @@ class RHIViewableResource : public RHIResource
 public:
 	RHIViewableResource() {};
 	virtual ~RHIViewableResource() {};
-
-
 };

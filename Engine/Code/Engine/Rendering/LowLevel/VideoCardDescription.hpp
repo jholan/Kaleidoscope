@@ -15,6 +15,7 @@ public:
 	VideoCardDescription();
 	VideoCardDescription(uint index, const DXGI_ADAPTER_DESC& adapterDesc);
 
+
 	// Properties
 	const std::string& GetName() const;
 	uint GetAdapterIndex() const;

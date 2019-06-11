@@ -19,25 +19,11 @@ RasterizerState::RasterizerState(const RHIDevice* device, const RasterizerStateD
 }
 
 
-RasterizerState::RasterizerState(const RasterizerState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
-}
-
-
 RasterizerState::~RasterizerState()
 {
 	ReleaseCOMHandle(m_handle);
 	m_description = RasterizerStateDescription();
 	m_device = nullptr;
-}
-
-
-void RasterizerState::operator=(const RasterizerState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
 }
 
 

@@ -8,6 +8,10 @@
 
 class HashedString;
 
+#define NUM_SAMPLER_SLOTS (16)
+#define NUM_SHADER_RESOURCE_SLOTS (16)
+#define NUM_CONSTANT_BUFFER_SLOTS (16)
+
 
 
 enum eBlendOp
@@ -119,40 +123,10 @@ enum eBufferUsage
 	BUFFER_USAGE_DYNAMIC,		// GPU(r)	CPU(w)
 	BUFFER_USAGE_STAGING		// GPU(rw)	CPU(rw)
 };
-D3D11_USAGE			ConvertToD3D11BufferUsage(eBufferUsage bufferUsage);
-HashedString		GetBufferUsageName(eBufferUsage bufferUsage);
-eBufferUsage		GetBufferUsageFromString(const HashedString& string, eBufferUsage defaultValue = BUFFER_USAGE_DEFAULT);
-uint				GetCPUAccessFlagsForUsage(eBufferUsage usage);
-
-
-enum eBufferBindPointFlag
-{
-	BUFFER_BIND_POINT_VERTEX,
-	BUFFER_BIND_POINT_INDEX,
-	BUFFER_BIND_POINT_CONSTANT
-};
-uint					ConvertToD3D11BufferBindPointFlags(uint bindPointFlags);
-D3D11_BIND_FLAG			ConvertToD3D11BindFlag(eBufferBindPointFlag bindPoint);
-HashedString			GetBufferUsageName(eBufferBindPointFlag bindPoint);
-eBufferBindPointFlag	GetBufferUsageFromString(const HashedString& string, eBufferBindPointFlag defaultValue = BUFFER_BIND_POINT_VERTEX);
-
-
-
-enum eResourceCPUAccessFlag
-{
-	RESOURCE_CPU_ACCESS_NONE = 0,
-	RESOURCE_CPU_ACCESS_WRITE,
-	RESOURCE_CPU_ACCESS_READ
-};
-uint ConvertToD3D11ResourceCPUAccessFlags(uint cpuAccessFlags);
-
-
-
-enum eBufferMiscFlag
-{
-	BUFFER_MISC_FLAG_NONE = 0
-};
-uint ConvertToD3D11BufferMiscFlags(uint bufferMiscFlags);
+D3D11_USAGE		ConvertToD3D11BufferUsage(eBufferUsage bufferUsage);
+HashedString	GetBufferUsageName(eBufferUsage bufferUsage);
+eBufferUsage	GetBufferUsageFromString(const HashedString& string, eBufferUsage defaultValue = BUFFER_USAGE_DEFAULT);
+uint			GetCPUAccessFlagsForUsage(eBufferUsage usage);
 
 
 
@@ -168,16 +142,18 @@ eWrapMode					GetWrapModeFromString(const HashedString& string, eWrapMode defaul
 
 
 
-enum TextureFormat
+enum eTextureFormat
 {
-	TEXTURE_FORMAT_RGBA = 0,
-	TEXTURE_FORMAT_SRGBA,
+	TEXTURE_FORMAT_RGBA8 = 0,
+	TEXTURE_FORMAT_SRGBA8,
 	TEXTURE_FORMAT_D24S8,
 	TEXTURE_FORMAT_RGBA16F,
 	TEXTURE_FORMAT_RGBA32F
 };
-DXGI_FORMAT ConvertToD3D11Format(TextureFormat format);
-TextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat);
+DXGI_FORMAT		ConvertToD3D11Format(eTextureFormat format);
+eTextureFormat	ConvertToFormat(DXGI_FORMAT dxgiFormat);
+HashedString	GetTextureFormatName(eTextureFormat format);
+eTextureFormat	GetTextureFormatFromString(const HashedString& string, eTextureFormat defaultValue = TEXTURE_FORMAT_RGBA8);
 
 
 
@@ -186,4 +162,6 @@ enum ePrimitiveTopology
 	PRIMITIVE_TOPOLOGY_TRIANGLES,
 	PRIMITIVE_TOPOLOGY_LINES
 };
-D3D_PRIMITIVE_TOPOLOGY ConvertToD3D11Topology(ePrimitiveTopology topology);
+D3D_PRIMITIVE_TOPOLOGY	ConvertToD3D11Topology(ePrimitiveTopology topology);
+HashedString			GetPrimitiveTopologyName(ePrimitiveTopology format);
+ePrimitiveTopology		GetPrimitiveTopologyFromString(const HashedString& string, ePrimitiveTopology defaultValue = PRIMITIVE_TOPOLOGY_TRIANGLES);

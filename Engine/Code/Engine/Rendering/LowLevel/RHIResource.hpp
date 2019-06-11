@@ -11,8 +11,4 @@ public:
 	virtual ~RHIResource() {};
 
 	virtual ivec3 GetDimensions() const = 0;
-
-
-
-private:
 };

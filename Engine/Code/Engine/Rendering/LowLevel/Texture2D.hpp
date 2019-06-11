@@ -18,8 +18,10 @@ public:
 
 
 public:
+	eTextureFormat format = TEXTURE_FORMAT_SRGBA8;
 	ivec2 dimensions = ivec2(0,0);
-	TextureFormat format = TEXTURE_FORMAT_SRGBA;
+	bool generateMips = false;
+	int highestMip = -1; // auto generate all
 };
 
 
@@ -27,14 +29,31 @@ public:
 class Texture2D : public Texture
 {
 public:
-	Texture2D(const RHIDevice* device, const Texture2DDescription description, ID3D11Texture2D* handle);
+	// Composition
+	Texture2D(const RHIDevice* device, const Texture2DDescription& description);
+	Texture2D(const RHIDevice* device, const Texture2DDescription& description, ID3D11Texture2D* handle);
 	virtual ~Texture2D() override;
 
+	Texture2D(const Texture2D& texture) = delete;
+	void operator=(const Texture2D& texture) = delete;
 
+
+	// Update
+	void Update(void* data);
+	void GenerateMipmaps();
+
+
+	// Queries
 	virtual ivec3 GetDimensions() const override;
-	virtual TextureFormat GetFormat() const override;
+	virtual ivec3 GetDimensions(uint mipLevel) const override;
+	virtual eTextureFormat GetFormat() const override;
+	
+	uint GetNumMipmaps() const;
+
+	bool IsLinear() const;
 
 
+	// D3D11 Helpers
 	ID3D11Texture2D* GetHandle() const;
 
 

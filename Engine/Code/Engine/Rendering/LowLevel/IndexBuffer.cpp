@@ -1,4 +1,4 @@
-#include "Engine/Rendering/LowLevel/VertexBuffer.hpp"
+#include "Engine/Rendering/LowLevel/IndexBuffer.hpp"
 
 #include "Engine/Core/WindowsLean.hpp"
 #include <d3d11_1.h>
@@ -13,20 +13,14 @@
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
-uint GetD3D11VertexBufferBindFlags(bool allowsStreamOut)
+uint GetD3D11IndexBufferBindFlags()
 {
-	uint flags = D3D11_BIND_VERTEX_BUFFER;
-
-	if (allowsStreamOut)
-	{
-		flags |= D3D11_BIND_STREAM_OUTPUT;
-	}
-
+	uint flags = D3D11_BIND_INDEX_BUFFER;
 	return flags;
 }
 
 
-void VerifyDataIntegrity(const VertexBufferDescription& description, void* data)
+void VerifyDataIntegrity(const IndexBufferDescription& description, void* data)
 {
 	// Thats a big no no, makes d3d11 mad
 	if (description.usage == BUFFER_USAGE_IMMUTABLE && data == nullptr)
@@ -36,7 +30,7 @@ void VerifyDataIntegrity(const VertexBufferDescription& description, void* data)
 }
 
 
-VertexBuffer::VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, void* data)
+IndexBuffer::IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, void* data)
 {
 	// Verify the user is following basic rules
 	// This GODs 
@@ -53,7 +47,7 @@ VertexBuffer::VertexBuffer(const RHIDevice* device, const VertexBufferDescriptio
 	D3D11_BUFFER_DESC bufferDescription;
 	bufferDescription.ByteWidth = m_description.elementCount* m_description.elementSizeBytes;
 	bufferDescription.Usage = ConvertToD3D11BufferUsage(m_description.usage);
-	bufferDescription.BindFlags = GetD3D11VertexBufferBindFlags(m_description.allowStreamOut);
+	bufferDescription.BindFlags = GetD3D11IndexBufferBindFlags();
 	bufferDescription.CPUAccessFlags = GetCPUAccessFlagsForUsage(m_description.usage);
 	bufferDescription.MiscFlags = 0;
 	bufferDescription.StructureByteStride = 0;
@@ -68,11 +62,11 @@ VertexBuffer::VertexBuffer(const RHIDevice* device, const VertexBufferDescriptio
 
 
 	HRESULT hr = m_device->GetD3D11Device()->CreateBuffer(&bufferDescription, bufferDataPtr, &m_handle);
-	GUARANTEE_OR_DIE(hr == S_OK, "Failed to create vertex buffer");
+	GUARANTEE_OR_DIE(hr == S_OK, "Failed to create index buffer");
 }
 
 
-VertexBuffer::~VertexBuffer()
+IndexBuffer::~IndexBuffer()
 {
 	ReleaseCOMHandle(m_handle);
 	m_device = nullptr;
@@ -81,9 +75,9 @@ VertexBuffer::~VertexBuffer()
 
 
 // -----------------------------------------------------------------
-// Composition
+// Changing Data
 // -----------------------------------------------------------------
-void VertexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
+void IndexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
 {
 	// SHORT CIRCUIT
 	uint dataSizeBytes = elementCount * elementSizeBytes;
@@ -100,11 +94,11 @@ void VertexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
 	}
 	else if (m_description.usage == BUFFER_USAGE_DEFAULT)
 	{
-		UpdateDefaultGPUBuffer(m_device, m_handle, data, dataSizeBytes, "vertex buffer");
+		UpdateDefaultGPUBuffer(m_device, m_handle, data, dataSizeBytes, "index buffer");
 	}
 	else if (m_description.usage == BUFFER_USAGE_DYNAMIC)
 	{
-		UpdateDynamicGPUBuffer(m_device, m_handle, data, dataSizeBytes, "Could not map vertex buffer");
+		UpdateDynamicGPUBuffer(m_device, m_handle, data, dataSizeBytes, "index buffer");
 	}
 
 
@@ -114,31 +108,35 @@ void VertexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
 }
 
 
-uint VertexBuffer::GetElementCount() const
+
+// -----------------------------------------------------------------
+// Queries
+// -----------------------------------------------------------------
+uint IndexBuffer::GetElementCount() const
 {
 	return m_description.elementCount;
 }
 
 
-uint VertexBuffer::GetElementSizeBytes() const
+uint IndexBuffer::GetElementSizeBytes() const
 {
 	return m_description.elementSizeBytes;
 }
 
 
-uint VertexBuffer::GetBufferSizeBytes() const
+uint IndexBuffer::GetBufferSizeBytes() const
 {
 	return m_description.elementCount * m_description.elementSizeBytes;
 }
 
 
-uint VertexBuffer::GetAllocationSizeBytes() const
+uint IndexBuffer::GetAllocationSizeBytes() const
 {
 	return m_bufferAllocationSizeBytes;
 }
 
 
-ivec3 VertexBuffer::GetDimensions() const
+ivec3 IndexBuffer::GetDimensions() const
 {
 	ivec3 dimensions;
 	dimensions.x = GetBufferSizeBytes();
@@ -152,7 +150,28 @@ ivec3 VertexBuffer::GetDimensions() const
 // -----------------------------------------------------------------
 // D3D11 Helpers
 // -----------------------------------------------------------------
-ID3D11Buffer* VertexBuffer::GetHandle() const
+ID3D11Buffer* IndexBuffer::GetHandle() const
 {
 	return m_handle;
+}
+
+
+DXGI_FORMAT IndexBuffer::GetD3D11ElementFormat() const
+{
+	DXGI_FORMAT format = DXGI_FORMAT_R32_UINT;
+
+	if (m_description.elementSizeBytes == sizeof(uint))
+	{
+		format = DXGI_FORMAT_R32_UINT;
+	}
+	else if (m_description.elementSizeBytes == sizeof(ushort))
+	{
+		format = DXGI_FORMAT_R16_UINT;
+	}
+	else
+	{
+		GUARANTEE_OR_DIE(false, "Unable to support index buffers with this sized element");
+	}
+
+	return format;
 }

@@ -74,7 +74,6 @@
     <ClInclude Include="Time\Stopwatch.hpp" />
     <ClInclude Include="Async\Atomic.hpp" />
     <ClInclude Include="XML\XMLUtils.hpp" />
-    <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="Rendering\Window.hpp" />
     <ClInclude Include="Rendering\Window.ii.hpp" />
     <ClInclude Include="Core\Blackboard.hpp" />
@@ -87,7 +86,6 @@
     <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
     <ClInclude Include="Rendering\LowLevel\RasterizerState.hpp" />
     <ClInclude Include="Rendering\LowLevel\DepthStencilState.hpp" />
-    <ClInclude Include="Rendering\LowLevel\GPUBuffer.hpp" />
     <ClInclude Include="Rendering\LowLevel\Sampler.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexTypes.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexAttribute.hpp" />
@@ -100,8 +98,19 @@
     <ClInclude Include="Rendering\LowLevel\RHIViewableResource.hpp" />
     <ClInclude Include="Rendering\LowLevel\Texture.hpp" />
     <ClInclude Include="Rendering\LowLevel\Texture2D.hpp" />
-    <ClInclude Include="Rendering\LowLevel\ResourceView.hpp" />
     <ClInclude Include="Rendering\LowLevel\FrameBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\GPUBufferUtils.hpp" />
+    <ClInclude Include="Rendering\LowLevel\IndexBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\DepthStencilView.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RenderTargetView.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderResourceView.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ConstantBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\TextureUtils.hpp" />
+    <ClInclude Include="3rdParty\TinyXML2\tinyxml2.h" />
+    <ClInclude Include="3rdParty\MikkT\mikktspace.h" />
+    <ClInclude Include="3rdParty\STB\stb_image.h" />
+    <ClInclude Include="3rdParty\STB\stb_image_write.h" />
+    <ClInclude Include="Rendering\HighLevel\Image.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\MathUtils.cpp">
@@ -173,9 +182,6 @@
     <ClCompile Include="Core\Blackboard.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
     <ClCompile Include="Rendering\LowLevel\RHIInstance.cpp">
       <Filter>General</Filter>
     </ClCompile>
@@ -198,9 +204,6 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\DepthStencilState.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="Rendering\LowLevel\GPUBuffer.cpp">
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\Sampler.cpp">
@@ -234,6 +237,36 @@
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\LowLevel\FrameBuffer.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\GPUBufferUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\IndexBuffer.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\DepthStencilView.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\ShaderResourceView.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\ConstantBuffer.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\LowLevel\TextureUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\TinyXML2\tinyxml2.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\MikkT\mikktspace.c">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParty\STB\stb_image.c">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\HighLevel\Image.cpp">
       <Filter>General</Filter>
     </ClCompile>
   </ItemGroup>

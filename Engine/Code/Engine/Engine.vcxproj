@@ -159,7 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
+    <ClInclude Include="3rdParty\MikkT\mikktspace.h" />
+    <ClInclude Include="3rdParty\STB\stb_image.h" />
+    <ClInclude Include="3rdParty\STB\stb_image_write.h" />
+    <ClInclude Include="3rdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="Async\Atomic.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueue.hpp" />
     <ClInclude Include="Async\Containers\ThreadSafeQueueInlineImplementation.hpp" />
@@ -202,14 +205,18 @@
     <ClInclude Include="Math\Vectors\Vec4.hpp" />
     <ClInclude Include="Math\Vectors\Vec4InlineImplementation.hpp" />
     <ClInclude Include="Math\Vectors.hpp" />
+    <ClInclude Include="Rendering\HighLevel\Image.hpp" />
     <ClInclude Include="Rendering\LowLevel\BlendState.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ConstantBuffer.hpp" />
     <ClInclude Include="Rendering\LowLevel\D3D11PreDefines.hpp" />
     <ClInclude Include="Rendering\LowLevel\DepthStencilState.hpp" />
+    <ClInclude Include="Rendering\LowLevel\DepthStencilView.hpp" />
     <ClInclude Include="Rendering\LowLevel\FrameBuffer.hpp" />
-    <ClInclude Include="Rendering\LowLevel\GPUBuffer.hpp" />
+    <ClInclude Include="Rendering\LowLevel\GPUBufferUtils.hpp" />
+    <ClInclude Include="Rendering\LowLevel\IndexBuffer.hpp" />
     <ClInclude Include="Rendering\LowLevel\RasterizerState.hpp" />
     <ClInclude Include="Rendering\LowLevel\RenderingEnums.hpp" />
-    <ClInclude Include="Rendering\LowLevel\ResourceView.hpp" />
+    <ClInclude Include="Rendering\LowLevel\RenderTargetView.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIDevice.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIInstance.hpp" />
     <ClInclude Include="Rendering\LowLevel\RHIOutput.hpp" />
@@ -218,8 +225,10 @@
     <ClInclude Include="Rendering\LowLevel\Sampler.hpp" />
     <ClInclude Include="Rendering\LowLevel\ShaderProgram.hpp" />
     <ClInclude Include="Rendering\LowLevel\ShaderProgramStage.hpp" />
+    <ClInclude Include="Rendering\LowLevel\ShaderResourceView.hpp" />
     <ClInclude Include="Rendering\LowLevel\Texture.hpp" />
     <ClInclude Include="Rendering\LowLevel\Texture2D.hpp" />
+    <ClInclude Include="Rendering\LowLevel\TextureUtils.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexAttribute.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexBuffer.hpp" />
     <ClInclude Include="Rendering\LowLevel\VertexLayout.hpp" />
@@ -237,7 +246,9 @@
     <ClInclude Include="__Control\__Control.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp" />
+    <ClCompile Include="3rdParty\MikkT\mikktspace.c" />
+    <ClCompile Include="3rdParty\STB\stb_image.c" />
+    <ClCompile Include="3rdParty\TinyXML2\tinyxml2.cpp" />
     <ClCompile Include="Async\Mutex.cpp" />
     <ClCompile Include="Async\ReaderWriterMutex.cpp" />
     <ClCompile Include="Async\Thread.cpp" />
@@ -254,10 +265,14 @@
     <ClCompile Include="Math\Primitives\Ray.cpp" />
     <ClCompile Include="Math\Primitives\Sphere.cpp" />
     <ClCompile Include="Math\Primitives\Triangle.cpp" />
+    <ClCompile Include="Rendering\HighLevel\Image.cpp" />
     <ClCompile Include="Rendering\LowLevel\BlendState.cpp" />
+    <ClCompile Include="Rendering\LowLevel\ConstantBuffer.cpp" />
     <ClCompile Include="Rendering\LowLevel\DepthStencilState.cpp" />
+    <ClCompile Include="Rendering\LowLevel\DepthStencilView.cpp" />
     <ClCompile Include="Rendering\LowLevel\FrameBuffer.cpp" />
-    <ClCompile Include="Rendering\LowLevel\GPUBuffer.cpp" />
+    <ClCompile Include="Rendering\LowLevel\GPUBufferUtils.cpp" />
+    <ClCompile Include="Rendering\LowLevel\IndexBuffer.cpp" />
     <ClCompile Include="Rendering\LowLevel\RasterizerState.cpp" />
     <ClCompile Include="Rendering\LowLevel\RenderingEnums.cpp" />
     <ClCompile Include="Rendering\LowLevel\RenderTargetView.cpp" />
@@ -267,7 +282,9 @@
     <ClCompile Include="Rendering\LowLevel\Sampler.cpp" />
     <ClCompile Include="Rendering\LowLevel\ShaderProgram.cpp" />
     <ClCompile Include="Rendering\LowLevel\ShaderProgramStage.cpp" />
+    <ClCompile Include="Rendering\LowLevel\ShaderResourceView.cpp" />
     <ClCompile Include="Rendering\LowLevel\Texture2D.cpp" />
+    <ClCompile Include="Rendering\LowLevel\TextureUtils.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexAttribute.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexBuffer.cpp" />
     <ClCompile Include="Rendering\LowLevel\VertexLayout.cpp" />

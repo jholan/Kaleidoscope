@@ -17,10 +17,19 @@
 #include "Engine/Rendering/LowLevel/RasterizerState.hpp"
 #include "Engine/Rendering/LowLevel/ShaderProgram.hpp"
 #include "Engine/Rendering/LowLevel/ShaderProgramStage.hpp"
-#include "Engine/Rendering/LowLevel/GPUBuffer.hpp"
+#include "Engine/Rendering/LowLevel/ConstantBuffer.hpp"
 #include "Engine/Rendering/LowLevel/FrameBuffer.hpp"
 #include "Engine/Rendering/LowLevel/VertexBuffer.hpp"
+#include "Engine/Rendering/LowLevel/IndexBuffer.hpp"
 #include "Engine/Rendering/LowLevel/VertexTypes.hpp"
+#include "Engine/Rendering/LowLevel/Sampler.hpp"
+#include "Engine/Rendering/HighLevel/Image.hpp"
+#include "Engine/Rendering/LowLevel/Texture2D.hpp"
+#include "Engine/Rendering/LowLevel/ShaderResourceView.hpp"
+struct CCB
+{
+	vec4 color;
+};
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
@@ -46,6 +55,7 @@ void App::Initialize()
 
 	g_theOutput = new RHIOutput();
 	g_theOutput->Initialize(g_theInstance, g_theDevice, g_theWindow);
+
 }
 
 
@@ -127,6 +137,8 @@ void App::Render() const
 {
 	// Render for subsystems
 
+
+
 	// Rendering test
 	DepthStateDescription dsd;
 	dsd.writeDepth = false;
@@ -160,6 +172,36 @@ void App::Render() const
 	vbd.allowStreamOut = false;
 	VertexBuffer* vertexBuffer = new VertexBuffer(g_theDevice, vbd, verts);
 
+	uint indices[] = 
+	{
+		0,1,2,
+		3,4,5
+	};
+	IndexBufferDescription ibd;
+	ibd.usage = BUFFER_USAGE_IMMUTABLE;
+	ibd.elementCount = sizeof(indices) / sizeof(uint);
+	ibd.elementSizeBytes = sizeof(uint);
+	IndexBuffer* indexBuffer = new IndexBuffer(g_theDevice, ibd, indices);
+
+	
+	CCB ccb;
+	ccb.color = vec4(1,1,0,1);
+	ConstantBuffer* cb = new ConstantBuffer(g_theDevice);
+	cb->SetCPUBuffer(&ccb, sizeof(ccb));
+
+	Texture2DDescription texDesc;
+	texDesc.dimensions = ivec2(10, 10);
+	texDesc.format = TEXTURE_FORMAT_RGBA8;
+	texDesc.generateMips = false;
+	uchar* texelData = LoadTexelData_Uchar("Data/testRGBA.png", texDesc.dimensions.x, texDesc.dimensions.y, false);
+	Texture2D* tex = new Texture2D(g_theDevice, texDesc);
+	tex->Update(texelData);
+	
+	ShaderResourceView* srv = new ShaderResourceView(g_theDevice, tex);
+
+	SamplerDescription samplerDesc;
+	samplerDesc.isLinear = false;
+	Sampler* sampler = new Sampler(g_theDevice, samplerDesc);
 
 	g_theDevice->BindFrameBuffer(framebuffer);
 
@@ -167,9 +209,13 @@ void App::Render() const
 	g_theDevice->SetPrimitiveTopology(PRIMITIVE_TOPOLOGY_TRIANGLES);
 	g_theDevice->BindVertexLayout(Vertex_PCU::GetLayout());
 	g_theDevice->BindVertexBuffer(vertexBuffer);
+	g_theDevice->BindIndexBuffer(indexBuffer);
 
 	// Prog
 	g_theDevice->BindShaderProgram(shaderProgram);
+	g_theDevice->BindConstantBuffer(1, cb);
+	g_theDevice->BindShaderResourceView(1, srv);
+	g_theDevice->BindSampler(1, sampler);
 
 	// RS
 	g_theDevice->BindRasterizerState(rasterizerState);
@@ -180,11 +226,18 @@ void App::Render() const
 	g_theDevice->BindBlendState(blendState);
 
 	// Evoc
-	g_theDevice->Draw(vbd.elementCount, 0);
+	g_theDevice->DrawIndexed(ibd.elementCount, 0);
 
 	// Flip
 	g_theOutput->Present();
 
+
+	delete sampler;
+	delete srv;
+	delete tex;
+	delete texelData;
+	delete cb;
+	delete indexBuffer;
 	delete vertexBuffer;
 	delete framebuffer;
 	delete shaderProgram;

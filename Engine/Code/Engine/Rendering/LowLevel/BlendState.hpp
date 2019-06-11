@@ -32,10 +32,10 @@ class BlendState
 public:
 	// Composition
 	BlendState(const RHIDevice* device, const BlendStateDescription& description);
-	BlendState(const BlendState& copyFrom);
 	~BlendState();
 
-	void operator=(const BlendState& copyFrom);
+	BlendState(const BlendState& bs) = delete;
+	void operator=(const BlendState& bs) = delete;
 
 
 	// Getters

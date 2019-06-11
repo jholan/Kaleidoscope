@@ -13,13 +13,28 @@
 #include "Engine/Rendering/LowLevel/VertexTypes.hpp"
 #include "Engine/Rendering/LowLevel/VertexLayout.hpp"
 #include "Engine/Rendering/LowLevel/VertexBuffer.hpp"
+#include "Engine/Rendering/LowLevel/IndexBuffer.hpp"
 #include "Engine/Rendering/LowLevel/ShaderProgramStage.hpp"
 #include "Engine/Rendering/LowLevel/ShaderProgram.hpp"
+#include "Engine/Rendering/LowLevel/ConstantBuffer.hpp"
+#include "Engine/Rendering/LowLevel/ShaderResourceView.hpp"
+#include "Engine/Rendering/LowLevel/Sampler.hpp"
 #include "Engine/Rendering/LowLevel/RasterizerState.hpp"
 #include "Engine/Rendering/LowLevel/BlendState.hpp"
 #include "Engine/Rendering/LowLevel/DepthStencilState.hpp"
 #include "Engine/Rendering/LowLevel/FrameBuffer.hpp"
-#include "Engine/Rendering/LowLevel/ResourceView.hpp"
+#include "Engine/Rendering/LowLevel/RenderTargetView.hpp"
+#include "Engine/Rendering/LowLevel/DepthStencilView.hpp"
+
+
+
+// -----------------------------------------------------------------
+// Utils
+// -----------------------------------------------------------------
+void VerifyIndex(uint index, uint maxIndex)
+{
+	GUARANTEE_OR_DIE(index < maxIndex, "Index out of bounds");
+}
 
 
 
@@ -179,6 +194,19 @@ void RHIDevice::UnbindVertexBuffer() const
 }
 
 
+void RHIDevice::BindIndexBuffer(const IndexBuffer* indexBuffer) const
+{
+	VerifyPointer((void*)indexBuffer);
+	m_deviceContext->IASetIndexBuffer(indexBuffer->GetHandle(), indexBuffer->GetD3D11ElementFormat(), 0);
+}
+
+
+void RHIDevice::UnbindIndexBuffer() const
+{
+	m_deviceContext->IASetIndexBuffer(NULL, DXGI_FORMAT_R32_UINT, 0);
+}
+
+
 
 // -----------------------------------------------------------------
 // Context
@@ -325,6 +353,320 @@ void RHIDevice::UnbindComputeShaderStage() const
 }
 
 
+void RHIDevice::BindConstantBuffer(uint index, ConstantBuffer* constantBuffer) const
+{
+	VerifyPointer((void*)constantBuffer);
+	VerifyIndex(index, NUM_CONSTANT_BUFFER_SLOTS);
+
+	constantBuffer->CopyCPUBufferToGPUBuffer();
+
+	BindVertexConstantBuffer(index, constantBuffer);
+	BindHullConstantBuffer(index, constantBuffer);
+	BindDomainConstantBuffer(index, constantBuffer);
+	BindGeometryConstantBuffer(index, constantBuffer);
+	BindFragmentConstantBuffer(index, constantBuffer);
+	BindComputeConstantBuffer(index, constantBuffer);
+}
+
+
+void RHIDevice::BindVertexConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->VSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindHullConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->HSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindDomainConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->DSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindGeometryConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->GSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindFragmentConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->PSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindComputeConstantBuffer(uint index, const ConstantBuffer* constantBuffer) const
+{
+	ID3D11Buffer* cbHandle = constantBuffer->GetHandle();
+	m_deviceContext->CSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindConstantBuffer(uint index) const
+{
+	VerifyIndex(index, NUM_CONSTANT_BUFFER_SLOTS);
+
+	UnbindVertexConstantBuffer(index);
+	UnbindHullConstantBuffer(index);
+	UnbindDomainConstantBuffer(index);
+	UnbindGeometryConstantBuffer(index);
+	UnbindFragmentConstantBuffer(index);
+	UnbindComputeConstantBuffer(index);
+}
+
+
+void RHIDevice::UnbindVertexConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->VSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindHullConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->HSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindDomainConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->DSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindGeometryConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->GSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindFragmentConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->PSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::UnbindComputeConstantBuffer(uint index) const
+{
+	ID3D11Buffer* cbHandle = NULL;
+	m_deviceContext->CSSetConstantBuffers(index, 1, &cbHandle);
+}
+
+
+void RHIDevice::BindShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	VerifyPointer((void*)srv);
+	VerifyIndex(index, NUM_SHADER_RESOURCE_SLOTS);
+
+	BindVertexShaderResourceView(index, srv);
+	BindHullShaderResourceView(index, srv);
+	BindDomainShaderResourceView(index, srv);
+	BindGeometryShaderResourceView(index, srv);
+	BindFragmentShaderResourceView(index, srv);
+	BindComputeShaderResourceView(index, srv);
+}
+
+
+void RHIDevice::BindVertexShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->VSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindHullShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->HSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindDomainShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->DSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindGeometryShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->GSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindFragmentShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->PSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindComputeShaderResourceView(uint index, const ShaderResourceView* srv) const
+{
+	ID3D11ShaderResourceView* srvHandle = srv->GetHandle();
+	m_deviceContext->CSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindShaderResourceView(uint index) const
+{
+	VerifyIndex(index, NUM_SHADER_RESOURCE_SLOTS);
+	
+	UnbindVertexShaderResourceView(index);
+	UnbindHullShaderResourceView(index);
+	UnbindDomainShaderResourceView(index);
+	UnbindGeometryShaderResourceView(index);
+	UnbindFragmentShaderResourceView(index);
+	UnbindComputeShaderResourceView(index);
+}
+
+
+void RHIDevice::UnbindVertexShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->VSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindHullShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->HSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindDomainShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->DSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindGeometryShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->GSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindFragmentShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->PSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::UnbindComputeShaderResourceView(uint index) const
+{
+	ID3D11ShaderResourceView* srvHandle = nullptr;
+	m_deviceContext->CSSetShaderResources(index, 1, &srvHandle);
+}
+
+
+void RHIDevice::BindSampler(uint index, const Sampler* sampler) const
+{
+	VerifyPointer((void*)sampler);
+	VerifyIndex(index, NUM_SAMPLER_SLOTS);
+
+	BindHullSampler(index, sampler);
+	BindDomainSampler(index, sampler);
+	BindGeometrySampler(index, sampler);
+	BindFragmentSampler(index, sampler);
+	BindComputeSampler(index, sampler);
+}
+
+
+void RHIDevice::BindHullSampler(uint index, const Sampler* sampler) const
+{
+	ID3D11SamplerState* samplerHandle = sampler->GetHandle();
+	m_deviceContext->HSSetSamplers(index, 1, &samplerHandle);
+}
+
+
+void RHIDevice::BindDomainSampler(uint index, const Sampler* sampler) const
+{
+	ID3D11SamplerState* samplerHandle = sampler->GetHandle();
+	m_deviceContext->DSSetSamplers(index, 1, &samplerHandle);
+}
+
+
+void RHIDevice::BindGeometrySampler(uint index, const Sampler* sampler) const
+{
+	ID3D11SamplerState* samplerHandle = sampler->GetHandle();
+	m_deviceContext->GSSetSamplers(index, 1, &samplerHandle);
+}
+
+
+void RHIDevice::BindFragmentSampler(uint index, const Sampler* sampler) const
+{
+	ID3D11SamplerState* samplerHandle = sampler->GetHandle();
+	m_deviceContext->PSSetSamplers(index, 1, &samplerHandle);
+}
+
+
+void RHIDevice::BindComputeSampler(uint index, const Sampler* sampler) const
+{
+	ID3D11SamplerState* samplerHandle = sampler->GetHandle();
+	m_deviceContext->CSSetSamplers(index, 1, &samplerHandle);
+}
+
+
+void RHIDevice::UnbindSampler(uint index) const
+{
+	VerifyIndex(index, NUM_SAMPLER_SLOTS);
+
+	UnbindHullSampler(index);
+	UnbindDomainSampler(index);
+	UnbindGeometrySampler(index);
+	UnbindFragmentSampler(index);
+	UnbindComputeSampler(index);
+}
+
+
+void RHIDevice::UnbindHullSampler(uint index) const
+{
+	m_deviceContext->HSSetSamplers(index, 1, NULL);
+}
+
+
+void RHIDevice::UnbindDomainSampler(uint index) const
+{
+	m_deviceContext->DSSetSamplers(index, 1, NULL);
+}
+
+
+void RHIDevice::UnbindGeometrySampler(uint index) const
+{
+	m_deviceContext->GSSetSamplers(index, 1, NULL);
+}
+
+
+void RHIDevice::UnbindFragmentSampler(uint index) const
+{
+	m_deviceContext->PSSetSamplers(index, 1, NULL);
+}
+
+
+void RHIDevice::UnbindComputeSampler(uint index) const
+{
+	m_deviceContext->CSSetSamplers(index, 1, NULL);
+}
+
+
 
 // -----------------------------------------------------------------
 // Context
@@ -403,8 +745,8 @@ void RHIDevice::BindFrameBuffer(const FrameBuffer* framebuffer) const
 	VerifyPointer((void*)framebuffer);
 
 	// Get all rtv handles
-	ID3D11RenderTargetView* rtvHandles[MAX_NUM_RENDER_TARGETS];
-	for (int i = 0; i < MAX_NUM_RENDER_TARGETS; ++i)
+	ID3D11RenderTargetView* rtvHandles[NUM_RENDER_TARGETS];
+	for (int i = 0; i < NUM_RENDER_TARGETS; ++i)
 	{
 		const RenderTargetView* rtv = framebuffer->GetRenderTarget(i);
 		if (rtv != nullptr)
@@ -417,7 +759,14 @@ void RHIDevice::BindFrameBuffer(const FrameBuffer* framebuffer) const
 		}
 	}
 
-	m_deviceContext->OMSetRenderTargets(1, rtvHandles, NULL);
+	// Get dsv handle
+	ID3D11DepthStencilView* dsvHandle = nullptr;
+	if(framebuffer->GetDepthTarget())
+	{
+		dsvHandle = framebuffer->GetDepthTarget()->GetHandle();
+	}
+
+	m_deviceContext->OMSetRenderTargets(NUM_RENDER_TARGETS, rtvHandles, dsvHandle);
 }
 
 

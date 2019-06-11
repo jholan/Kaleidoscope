@@ -19,25 +19,11 @@ Sampler::Sampler(const RHIDevice* device, const SamplerDescription& description)
 }
 
 
-Sampler::Sampler(const Sampler& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
-}
-
-
 Sampler::~Sampler()
 {
 	ReleaseCOMHandle(m_handle);
 	m_description = SamplerDescription();
 	m_device = nullptr;
-}
-
-
-void Sampler::operator=(const Sampler& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
 }
 
 

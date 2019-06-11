@@ -11,7 +11,7 @@ FrameBuffer::FrameBuffer(const RHIDevice* device)
 {
 	m_device = device;
 
-	for (int i = 0; i < MAX_NUM_RENDER_TARGETS; ++i)
+	for (int i = 0; i < NUM_RENDER_TARGETS; ++i)
 	{
 		m_renderTargets[i] = nullptr;
 	}
@@ -22,10 +22,12 @@ FrameBuffer::~FrameBuffer()
 {
 	m_device = nullptr;
 
-	for (int i = 0; i < MAX_NUM_RENDER_TARGETS; ++i)
+	for (int i = 0; i < NUM_RENDER_TARGETS; ++i)
 	{
 		m_renderTargets[i] = nullptr;
 	}
+
+	m_depthTarget = nullptr;
 }
 
 
@@ -35,7 +37,7 @@ FrameBuffer::~FrameBuffer()
 // -----------------------------------------------------------------
 void VerifyIndex(uint index)
 {
-	GUARANTEE_OR_DIE(index < MAX_NUM_RENDER_TARGETS, "Invalid index for FrameBuffer access");
+	GUARANTEE_OR_DIE(index < NUM_RENDER_TARGETS, "Invalid index for FrameBuffer access");
 }
 
 
@@ -57,4 +59,26 @@ const RenderTargetView* FrameBuffer::GetRenderTarget(uint index) const
 {
 	VerifyIndex(index);
 	return m_renderTargets[index];
+}
+
+
+
+// -----------------------------------------------------------------
+// Depth Targets
+// -----------------------------------------------------------------
+void FrameBuffer::SetDepthTarget(const DepthStencilView* dsv)
+{
+	m_depthTarget = dsv;
+}
+
+
+void FrameBuffer::RemoveDepthTarget()
+{
+	m_depthTarget = nullptr;
+}
+
+
+const DepthStencilView* FrameBuffer::GetDepthTarget() const
+{
+	return m_depthTarget;
 }

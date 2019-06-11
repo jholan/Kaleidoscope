@@ -28,10 +28,10 @@ class RasterizerState
 public:
 	// Composition
 	RasterizerState(const RHIDevice* device, const RasterizerStateDescription& description);
-	RasterizerState(const RasterizerState& copyFrom);
 	~RasterizerState();
 
-	void operator=(const RasterizerState& copyFrom);
+	RasterizerState(const RasterizerState& rs) = delete;
+	void operator=(const RasterizerState& rs) = delete;
 
 
 	// Getters

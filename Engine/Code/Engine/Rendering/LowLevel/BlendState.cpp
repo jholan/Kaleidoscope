@@ -20,25 +20,11 @@ BlendState::BlendState(const RHIDevice* device, const BlendStateDescription& des
 }
 
 
-BlendState::BlendState(const BlendState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
-}
-
-
 BlendState::~BlendState()
 {
 	ReleaseCOMHandle(m_handle);
 	m_description = BlendStateDescription();
 	m_device = nullptr;
-}
-
-
-void BlendState::operator=(const BlendState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescription(copyFrom.m_description);
 }
 
 

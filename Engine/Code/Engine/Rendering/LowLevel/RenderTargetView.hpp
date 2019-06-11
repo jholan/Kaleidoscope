@@ -16,6 +16,9 @@ public:
 	RenderTargetView(const RHIDevice* device, const Texture2D* texture2D);
 	~RenderTargetView();
 
+	RenderTargetView(const RenderTargetView& rtv) = delete;
+	void operator=(const RenderTargetView& rtv) = delete;
+
 
 	// D3D11 Helpers
 	ID3D11RenderTargetView* GetHandle() const;

@@ -15,6 +15,9 @@ public:
 	~ShaderProgram();
 		void InvalidateAllStages();
 
+	ShaderProgram(const ShaderProgram& program) = delete;
+	void operator=(const ShaderProgram& program) = delete;
+
 
 	// Initialize
 	void LoadFromFiles(const std::string& vsFilepath, const std::string& hsFilepath, const std::string& dsFilepath, const std::string& gsFilepath, const std::string& fsFilepath, const std::string& csFilepath);
@@ -35,5 +38,4 @@ private:
 	const RHIDevice* m_device = nullptr;
 
 	ShaderProgramStage* m_stages[NUM_SHADER_STAGES];
-
 };

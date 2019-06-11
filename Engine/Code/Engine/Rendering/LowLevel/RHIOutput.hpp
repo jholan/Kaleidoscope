@@ -20,8 +20,12 @@ public:
 	void Initialize(RHIInstance* instance, RHIDevice* device, Window* window);
 	void Destroy();
 
+
+	// Update Screen
 	void Present();
 
+
+	// Get backbuffer
 	RenderTargetView* GetBackBufferRTV() const;
 
 

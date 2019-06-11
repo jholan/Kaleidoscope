@@ -10,11 +10,11 @@ class RHIDevice;
 
 
 
-class VertexBufferDescription
+class IndexBufferDescription
 {
 public:
-	VertexBufferDescription() {};
-	~VertexBufferDescription() {};
+	IndexBufferDescription() {};
+	~IndexBufferDescription() {};
 
 
 
@@ -22,20 +22,19 @@ public:
 	eBufferUsage usage = BUFFER_USAGE_DEFAULT;
 	uint elementCount = 0;
 	uint elementSizeBytes = 0;
-	bool allowStreamOut = false;
 };
 
 
 
-class VertexBuffer : public RHIResource
+class IndexBuffer : public RHIResource
 {
 public:
 	// Composition
-	VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, void* data);
-	virtual ~VertexBuffer() override;
+	IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, void* data);
+	virtual ~IndexBuffer() override;
 
-	VertexBuffer(const VertexBuffer& vertexBuffer) = delete;
-	void operator=(const VertexBuffer& vertexBuffer) = delete;
+	IndexBuffer(const IndexBuffer& ib) = delete;
+	void operator=(const IndexBuffer& ib) = delete;
 
 
 	// Changing Data
@@ -53,12 +52,13 @@ public:
 
 	// D3D11 Helpers
 	ID3D11Buffer* GetHandle() const;
+	DXGI_FORMAT GetD3D11ElementFormat() const;
 
 
 
 private:
 	const RHIDevice* m_device = nullptr;
-	VertexBufferDescription m_description;
+	IndexBufferDescription m_description;
 	uint m_bufferAllocationSizeBytes = 0;
 
 	ID3D11Buffer* m_handle = nullptr;

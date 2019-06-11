@@ -2,7 +2,7 @@
 
 #include "Engine/Rendering/LowLevel/RHIViewableResource.hpp"
 
-enum TextureFormat;
+enum eTextureFormat;
 
 
 
@@ -12,5 +12,7 @@ public:
 	Texture() {};
 	virtual ~Texture() {};
 
-	virtual TextureFormat GetFormat() const = 0;
+	virtual eTextureFormat GetFormat() const = 0;
+	
+	virtual ivec3 GetDimensions(uint mipLevel) const = 0;
 };

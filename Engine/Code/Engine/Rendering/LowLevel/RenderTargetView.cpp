@@ -1,4 +1,4 @@
-#include "Engine/Rendering/LowLevel/ResourceView.hpp"
+#include "Engine/Rendering/LowLevel/RenderTargetView.hpp"
 
 #include "Engine/Core/WindowsLean.hpp"
 #include <d3d11_1.h>
@@ -10,7 +10,9 @@
 
 
 
+// -----------------------------------------------------------------
 // Composition
+// -----------------------------------------------------------------
 RenderTargetView::RenderTargetView(const RHIDevice* device, const Texture2D* texture2D)
 {
 	m_device = device;
@@ -36,7 +38,10 @@ RenderTargetView::~RenderTargetView()
 }
 
 
+
+// -----------------------------------------------------------------
 // D3D11 Helpers
+// -----------------------------------------------------------------
 ID3D11RenderTargetView* RenderTargetView::GetHandle() const
 {
 	return m_handle;

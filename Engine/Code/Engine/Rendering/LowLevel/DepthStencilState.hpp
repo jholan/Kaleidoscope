@@ -57,10 +57,10 @@ class DepthStencilState
 public:
 	// Composition
 	DepthStencilState(const RHIDevice* device, const DepthStateDescription& depthDesc, const StencilStateDescription& stencilDesc);
-	DepthStencilState(const DepthStencilState& copyFrom);
 	~DepthStencilState();
 
-	void operator=(const DepthStencilState& copyFrom);
+	DepthStencilState(const DepthStencilState& dss) = delete;
+	void operator=(const DepthStencilState& dss) = delete;
 
 
 	// Getters

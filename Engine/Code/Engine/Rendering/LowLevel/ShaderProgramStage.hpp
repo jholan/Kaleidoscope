@@ -31,6 +31,9 @@ public:
 	~ShaderProgramStage();
 		void InvalidateStage();
 
+	ShaderProgramStage(const ShaderProgramStage& stage) = delete;
+	void operator=(const ShaderProgramStage& stage) = delete;
+
 
 	// Initialize
 	bool LoadFromFile(const std::string& filepath);

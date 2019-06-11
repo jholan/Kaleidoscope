@@ -1,5 +1,8 @@
 #include "Engine/Rendering/LowLevel/RenderingEnums.hpp"
 
+#include <vector>
+#include <utility>
+
 #include "Engine/Core/WindowsLean.hpp"
 #include <d3d11_1.h>
 
@@ -754,6 +757,15 @@ eStencilOp GetStencilOpFromString(const HashedString& string, eStencilOp default
 // -----------------------------------------------------------------
 // Buffer Usage
 // -----------------------------------------------------------------
+static HashedString USAGE_NAMES[]  =
+{
+	"default",
+	"immutable",
+	"dynamic",
+	"staging"
+};
+
+
 D3D11_USAGE ConvertToD3D11BufferUsage(eBufferUsage bufferUsage)
 {
 	D3D11_USAGE d3dUsage = D3D11_USAGE_DEFAULT;
@@ -785,6 +797,48 @@ D3D11_USAGE ConvertToD3D11BufferUsage(eBufferUsage bufferUsage)
 	}
 
 	return d3dUsage;
+}
+
+
+HashedString GetBufferUsageName(eBufferUsage bufferUsage)
+{
+	HashedString name = USAGE_NAMES[(int)bufferUsage];
+	return name;
+}
+
+
+eBufferUsage GetBufferUsageFromString(const HashedString& string, eBufferUsage defaultValue)
+{
+	eBufferUsage usage = defaultValue;
+
+
+	// Static names
+	static HashedString defaultName = USAGE_NAMES[(int)BUFFER_USAGE_DEFAULT];
+	static HashedString immutableName = USAGE_NAMES[(int)BUFFER_USAGE_IMMUTABLE];
+	static HashedString dynamicName = USAGE_NAMES[(int)BUFFER_USAGE_DYNAMIC];
+	static HashedString stagingName = USAGE_NAMES[(int)BUFFER_USAGE_STAGING];
+
+
+	// Comparisons
+	if (string == defaultName)
+	{
+		usage = BUFFER_USAGE_DEFAULT;
+	}
+	else if (string == immutableName)
+	{
+		usage = BUFFER_USAGE_IMMUTABLE;
+	}
+	else if (string == dynamicName)
+	{
+		usage = BUFFER_USAGE_DYNAMIC;
+	}
+	else if (string == stagingName)
+	{
+		usage = BUFFER_USAGE_STAGING;
+	}
+
+
+	return usage;
 }
 
 
@@ -890,18 +944,28 @@ eWrapMode GetWrapModeFromString(const HashedString& string, eWrapMode defaultVal
 // -----------------------------------------------------------------
 // Texture Format
 // -----------------------------------------------------------------
-DXGI_FORMAT ConvertToD3D11Format(TextureFormat textureFormat)
+static HashedString TEXTURE_FORMAT_NAMES[] = 
+{
+	"rgba8",
+	"srgba8",
+	"d24s8",
+	"rgba16f",
+	"rgba32f"
+};
+
+
+DXGI_FORMAT ConvertToD3D11Format(eTextureFormat textureFormat)
 {
 	DXGI_FORMAT dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 
 	switch(textureFormat)
 	{
-	case TEXTURE_FORMAT_RGBA:
+	case TEXTURE_FORMAT_RGBA8:
 	{
 		dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 		break;
 	}
-	case TEXTURE_FORMAT_SRGBA:
+	case TEXTURE_FORMAT_SRGBA8:
 	{
 		dxgiFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 		break;
@@ -929,20 +993,20 @@ DXGI_FORMAT ConvertToD3D11Format(TextureFormat textureFormat)
 }
 
 
-TextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat)
+eTextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat)
 {
-	TextureFormat format = TEXTURE_FORMAT_SRGBA;
+	eTextureFormat format = TEXTURE_FORMAT_SRGBA8;
 
 	switch(dxgiFormat)
 	{
 	case DXGI_FORMAT_R8G8B8A8_UNORM:
 	{
-		format = TEXTURE_FORMAT_RGBA;
+		format = TEXTURE_FORMAT_RGBA8;
 		break;
 	}
 	case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
 	{
-		format = TEXTURE_FORMAT_SRGBA;
+		format = TEXTURE_FORMAT_SRGBA8;
 		break;
 	}
 	case DXGI_FORMAT_R24G8_TYPELESS:
@@ -968,10 +1032,64 @@ TextureFormat ConvertToFormat(DXGI_FORMAT dxgiFormat)
 }
 
 
+HashedString GetTextureFormatName(eTextureFormat format)
+{
+	HashedString name = TEXTURE_FORMAT_NAMES[(int)format];
+	return name;
+}
+
+
+eTextureFormat GetTextureFormatFromString(const HashedString& string, eTextureFormat defaultValue)
+{
+	eTextureFormat format = defaultValue;
+
+
+	// Static names
+	static HashedString rgba8Name	= TEXTURE_FORMAT_NAMES[(int)TEXTURE_FORMAT_RGBA8];
+	static HashedString srgba8Name	= TEXTURE_FORMAT_NAMES[(int)TEXTURE_FORMAT_SRGBA8];
+	static HashedString d24s8Name	= TEXTURE_FORMAT_NAMES[(int)TEXTURE_FORMAT_D24S8];
+	static HashedString rgba16fName	= TEXTURE_FORMAT_NAMES[(int)TEXTURE_FORMAT_RGBA16F];
+	static HashedString rgba32fName	= TEXTURE_FORMAT_NAMES[(int)TEXTURE_FORMAT_RGBA32F];
+
+
+	// Comparisons
+	if (string == rgba8Name)
+	{
+		format = TEXTURE_FORMAT_RGBA8;
+	}
+	else if (string == srgba8Name)
+	{
+		format = TEXTURE_FORMAT_SRGBA8;
+	}
+	else if (string == d24s8Name)
+	{
+		format = TEXTURE_FORMAT_D24S8;
+	}
+	else if (string == rgba16fName)
+	{
+		format = TEXTURE_FORMAT_RGBA16F;
+	}
+	else if (string == rgba32fName)
+	{
+		format = TEXTURE_FORMAT_RGBA32F;
+	}
+
+
+	return format;
+}
+
+
 
 // -----------------------------------------------------------------
 // Primitive Topology
 // -----------------------------------------------------------------
+static HashedString PRIMITIVE_TOPOLOGY_NAMES[] = 
+{
+	"triangles",
+	"lines"
+};
+
+
 D3D_PRIMITIVE_TOPOLOGY ConvertToD3D11Topology(ePrimitiveTopology topology)
 {
 	D3D_PRIMITIVE_TOPOLOGY d3dTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -993,4 +1111,40 @@ D3D_PRIMITIVE_TOPOLOGY ConvertToD3D11Topology(ePrimitiveTopology topology)
 	}
 
 	return d3dTopology;
+}
+
+
+HashedString GetPrimitiveTopologyName(ePrimitiveTopology format)
+{
+	HashedString name = PRIMITIVE_TOPOLOGY_NAMES[(int)format];
+	return name;
+}
+
+
+ePrimitiveTopology GetPrimitiveTopologyFromString(const HashedString& string, ePrimitiveTopology defaultValue)
+{
+	ePrimitiveTopology topology = defaultValue;
+
+
+	// Static names
+	typedef std::pair<HashedString, ePrimitiveTopology> NamePair;
+	static std::vector<NamePair> names = 
+	{
+		NamePair(PRIMITIVE_TOPOLOGY_NAMES[(int)PRIMITIVE_TOPOLOGY_TRIANGLES], PRIMITIVE_TOPOLOGY_TRIANGLES),
+		NamePair(PRIMITIVE_TOPOLOGY_NAMES[(int)PRIMITIVE_TOPOLOGY_LINES], PRIMITIVE_TOPOLOGY_LINES)
+	};
+
+
+	// Comparisons
+	for (int i = 0; i < (int)names.size(); ++i)
+	{
+		if (string == names[i].first)
+		{
+			topology = names[i].second;
+			break;
+		}
+	}
+
+
+	return topology;
 }

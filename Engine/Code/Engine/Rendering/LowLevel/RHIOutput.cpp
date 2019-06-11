@@ -10,7 +10,7 @@
 #include "Engine/Rendering/LowLevel/RHIDevice.hpp"
 #include "Engine/Rendering/Window.hpp"
 #include "Engine/Rendering/LowLevel/Texture2D.hpp"
-#include "Engine/Rendering/LowLevel/ResourceView.hpp"
+#include "Engine/Rendering/LowLevel/RenderTargetView.hpp"
 
 
 
@@ -112,12 +112,20 @@ void RHIOutput::Destroy()
 }
 
 
+
+// -----------------------------------------------------------------
+// Update Screen
+// -----------------------------------------------------------------
 void RHIOutput::Present()
 {
 	m_swapChain->Present(1, 0);
 }
 
 
+
+// -----------------------------------------------------------------
+// Get Back Buffer
+// -----------------------------------------------------------------
 RenderTargetView* RHIOutput::GetBackBufferRTV() const
 {
 	return m_backbufferRTV;

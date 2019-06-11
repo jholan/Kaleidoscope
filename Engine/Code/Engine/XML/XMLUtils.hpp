@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "ThirdParty/TinyXML2/tinyxml2.h"
+#include "Engine/3rdParty/TinyXML2/tinyxml2.h"
 using XMLDoc = tinyxml2::XMLDocument;
 using XMLEle = tinyxml2::XMLElement;
 using XMLAttr = tinyxml2::XMLAttribute;

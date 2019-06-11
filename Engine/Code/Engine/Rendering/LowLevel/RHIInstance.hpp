@@ -32,7 +32,6 @@ public:
 
 
 
-
 private:
 	IDXGIFactory* m_factory = nullptr;
 

@@ -19,26 +19,12 @@ DepthStencilState::DepthStencilState(const RHIDevice* device, const DepthStateDe
 }
 
 
-DepthStencilState::DepthStencilState(const DepthStencilState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescriptions(copyFrom.m_depthDescription, copyFrom.m_stencilDescription);
-}
-
-
 DepthStencilState::~DepthStencilState()
 {
 	ReleaseCOMHandle(m_handle);
 	m_depthDescription = DepthStateDescription();
 	m_stencilDescription = StencilStateDescription();
 	m_device = nullptr;
-}
-
-
-void DepthStencilState::operator=(const DepthStencilState& copyFrom)
-{
-	m_device = copyFrom.m_device;
-	SetDescriptions(copyFrom.m_depthDescription, copyFrom.m_stencilDescription);
 }
 
 

@@ -45,10 +45,10 @@ class Sampler
 public:
 	// Composition
 	Sampler(const RHIDevice* device, const SamplerDescription& description);
-	Sampler(const Sampler& copyFrom);
 	~Sampler();
 
-	void operator=(const Sampler& copyFrom);
+	Sampler(const Sampler& sampler) = delete;
+	void operator=(const Sampler& sampler) = delete;
 
 
 	// Getters
