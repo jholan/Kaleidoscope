@@ -17,7 +17,7 @@ float4 FSMain(FSIn input) : SV_TARGET
 {
 	float4 outColor = float4(input.uv, 0, 1);
 	
-	outColor = tex.Sample(linearSampler, input.uv) + (color * 0.7f);
+	outColor = tex.Sample(linearSampler, input.uv);// + (color * 0.7f);
 	
 	
 	return outColor;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Engine/Core/Types.hpp"
+
 
 
 class App;
@@ -11,6 +13,9 @@ extern Window* g_theWindow;
 class Blackboard;
 extern Blackboard* g_theBlackboard;
 
+extern ulonglong g_theFrameNumber;
+
+
 
 // Rendering
 class RHIInstance;
@@ -21,3 +26,4 @@ extern RHIDevice* g_theDevice;
 
 class RHIOutput;
 extern RHIOutput* g_theOutput;
+

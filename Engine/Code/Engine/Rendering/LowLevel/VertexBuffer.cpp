@@ -26,7 +26,7 @@ uint GetD3D11VertexBufferBindFlags(bool allowsStreamOut)
 }
 
 
-void VerifyDataIntegrity(const VertexBufferDescription& description, void* data)
+void VerifyDataIntegrity(const VertexBufferDescription& description, const void* data)
 {
 	// Thats a big no no, makes d3d11 mad
 	if (description.usage == BUFFER_USAGE_IMMUTABLE && data == nullptr)
@@ -36,7 +36,7 @@ void VerifyDataIntegrity(const VertexBufferDescription& description, void* data)
 }
 
 
-VertexBuffer::VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, void* data)
+VertexBuffer::VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, const void* data)
 {
 	// Verify the user is following basic rules
 	// This GODs 
@@ -83,7 +83,7 @@ VertexBuffer::~VertexBuffer()
 // -----------------------------------------------------------------
 // Composition
 // -----------------------------------------------------------------
-void VertexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
+void VertexBuffer::Update(const void* data, uint elementCount, uint elementSizeBytes)
 {
 	// SHORT CIRCUIT
 	uint dataSizeBytes = elementCount * elementSizeBytes;

@@ -13,3 +13,14 @@
 <Renderer>
 	<ResolutionScale value=".9" />
 </Renderer>
+
+<Resources>
+	<BasePath value="Data/Assets/" />
+	
+	<!-- Folders to search for database files -->
+	<Meshes dbFolderPath="Data/Databases/Meshes/" />
+	<Audio dbFolderPath="Data/Databases/Audio/" />
+	<MAterials dbFolderPath="Data/Databases/Materials/" />
+	<Shaders dbFolderPath="Data/Databases/Shaders/" />
+	<Textures dbFolderPath="Data/Databases/Textures/" />
+</Resources>

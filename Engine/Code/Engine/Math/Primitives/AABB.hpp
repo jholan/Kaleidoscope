@@ -8,6 +8,7 @@ class AABB
 {
 public:
 	// Composition
+	AABB();
 	AABB(const vec3& mins, const vec3& maxs);
 
 	// Positions

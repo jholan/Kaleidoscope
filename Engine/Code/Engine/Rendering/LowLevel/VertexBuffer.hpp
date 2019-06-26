@@ -31,7 +31,7 @@ class VertexBuffer : public RHIResource
 {
 public:
 	// Composition
-	VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, void* data);
+	VertexBuffer(const RHIDevice* device, const VertexBufferDescription& description, const void* data);
 	virtual ~VertexBuffer() override;
 
 	VertexBuffer(const VertexBuffer& vertexBuffer) = delete;
@@ -39,7 +39,7 @@ public:
 
 
 	// Changing Data
-	void Update(void* data, uint elementCount, uint elementSizeBytes);
+	void Update(const void* data, uint elementCount, uint elementSizeBytes);
 
 
 	// Queries

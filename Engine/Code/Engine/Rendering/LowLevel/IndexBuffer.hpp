@@ -30,7 +30,7 @@ class IndexBuffer : public RHIResource
 {
 public:
 	// Composition
-	IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, void* data);
+	IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, const void* data);
 	virtual ~IndexBuffer() override;
 
 	IndexBuffer(const IndexBuffer& ib) = delete;
@@ -38,7 +38,7 @@ public:
 
 
 	// Changing Data
-	void Update(void* data, uint elementCount, uint elementSizeBytes);
+	void Update(const void* data, uint elementCount, uint elementSizeBytes);
 
 
 	// Queries

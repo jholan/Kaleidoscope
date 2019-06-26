@@ -55,6 +55,8 @@ RHIDevice::~RHIDevice()
 
 void RHIDevice::Initialize(RHIInstance* instance, const VideoCardDescription& videoCard)
 {
+	m_instance = instance;
+
 	// Obtain the adapter from its description
 	IDXGIAdapter*		adapter = instance->GetAdapter(videoCard.GetAdapterIndex());
 	

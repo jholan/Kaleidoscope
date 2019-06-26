@@ -46,4 +46,4 @@ char		ParseXmlAttribute(const XMLEle* element, const char* attributeName, char d
 
 // Strings
 std::string ParseXmlAttribute(const XMLEle* element, const char* attributeName, const std::string& defaultValue);
-std::string ParseXmlAttribute(const XMLEle* element, const char* attributeName, const char* defaultValue = nullptr);
+std::string ParseXmlAttribute(const XMLEle* element, const char* attributeName, const char* defaultValue = "");

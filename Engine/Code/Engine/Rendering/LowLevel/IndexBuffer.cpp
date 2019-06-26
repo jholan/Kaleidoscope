@@ -20,7 +20,7 @@ uint GetD3D11IndexBufferBindFlags()
 }
 
 
-void VerifyDataIntegrity(const IndexBufferDescription& description, void* data)
+void VerifyDataIntegrity(const IndexBufferDescription& description, const void* data)
 {
 	// Thats a big no no, makes d3d11 mad
 	if (description.usage == BUFFER_USAGE_IMMUTABLE && data == nullptr)
@@ -30,7 +30,7 @@ void VerifyDataIntegrity(const IndexBufferDescription& description, void* data)
 }
 
 
-IndexBuffer::IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, void* data)
+IndexBuffer::IndexBuffer(const RHIDevice* device, const IndexBufferDescription& description, const void* data)
 {
 	// Verify the user is following basic rules
 	// This GODs 
@@ -77,7 +77,7 @@ IndexBuffer::~IndexBuffer()
 // -----------------------------------------------------------------
 // Changing Data
 // -----------------------------------------------------------------
-void IndexBuffer::Update(void* data, uint elementCount, uint elementSizeBytes)
+void IndexBuffer::Update(const void* data, uint elementCount, uint elementSizeBytes)
 {
 	// SHORT CIRCUIT
 	uint dataSizeBytes = elementCount * elementSizeBytes;

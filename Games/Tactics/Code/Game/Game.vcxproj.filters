@@ -19,10 +19,38 @@
     <ClCompile Include="Game\Game.cpp">
       <Filter>General</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameState\GameState.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameState\LoadState.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Mesh.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\GraphicsShader.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\MeshBuilder.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourceUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\MeshUtils.cpp">
+      <Filter>General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\App.hpp" />
     <ClInclude Include="App\AppCommon.hpp" />
     <ClInclude Include="Game\Game.hpp" />
+    <ClInclude Include="Game\GameState\GameState.hpp" />
+    <ClInclude Include="Game\GameState\LoadState.hpp" />
+    <ClInclude Include="Rendering\Mesh.hpp" />
+    <ClInclude Include="Rendering\GraphicsShader.hpp" />
+    <ClInclude Include="Rendering\MeshBuilder.hpp" />
+    <ClInclude Include="Resource\ResourceUtils.hpp" />
+    <ClInclude Include="Rendering\MeshUtils.hpp" />
   </ItemGroup>
 </Project>

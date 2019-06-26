@@ -1,0 +1,29 @@
+<Meshes>
+	<Mesh name="Cerberus">
+		<Filepath value="Meshes/Cerberus.obj" />
+	</Mesh>
+	
+	<Mesh name="RoundedCube">
+		<Filepath value="Meshes/RoundedCube.obj" />
+	</Mesh>
+	
+	<Mesh name="ReflectanceProbe">
+		<Filepath value="Meshes/ReflectanceProbe.obj" />
+	</Mesh>
+	
+	<Mesh name="SnowMiku">
+		<Filepath value="Meshes/SnowMiku.obj" />
+	</Mesh>
+	
+	<Mesh name="Sponza">
+		<Filepath value="Meshes/Sponza.obj" />
+	</Mesh>
+	
+	<Mesh name="Cerberus">
+		<Filepath value="Meshes/Stump_04_Base_LOD0.obj" />
+	</Mesh>
+	
+	<Mesh name="WoodRoot">
+		<Filepath value="Meshes/WoodRoot.obj" />
+	</Mesh>
+</Meshes>

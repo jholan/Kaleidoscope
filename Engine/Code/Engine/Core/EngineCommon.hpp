@@ -16,6 +16,9 @@ extern Clock*		g_theMasterClock;
 class EventSystem;
 extern EventSystem* g_theGlobalEventSystem;
 
+class JobSystem;
+extern JobSystem* g_theJobSystem;
+
 
 
 void InitializeRequiredEngineSubsystems();

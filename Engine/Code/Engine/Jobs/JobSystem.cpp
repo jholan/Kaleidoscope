@@ -127,6 +127,9 @@ void JobSystem::EndFrame()
 			m_workerThreads.erase(m_workerThreads.begin() + i);
 		}
 	}
+
+
+	FinishCompletedJobs();
 }
 
 

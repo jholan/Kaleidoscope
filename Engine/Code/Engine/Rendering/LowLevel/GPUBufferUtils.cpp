@@ -12,7 +12,7 @@
 // -----------------------------------------------------------------
 // Buffer Update Utils
 // -----------------------------------------------------------------
-void UpdateDynamicGPUBuffer(const RHIDevice* device, ID3D11Buffer* bufferHandle, void* data, uint dataSizeBytes, const std::string& bufferIdentifier)
+void UpdateDynamicGPUBuffer(const RHIDevice* device, ID3D11Buffer* bufferHandle, const void* data, uint dataSizeBytes, const std::string& bufferIdentifier)
 {
 	// Map the buffer
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -27,7 +27,7 @@ void UpdateDynamicGPUBuffer(const RHIDevice* device, ID3D11Buffer* bufferHandle,
 }
 
 
-void UpdateDefaultGPUBuffer(const RHIDevice* device, ID3D11Buffer* bufferHandle, void* data, uint dataSizeBytes, const std::string& bufferIdentifier)
+void UpdateDefaultGPUBuffer(const RHIDevice* device, ID3D11Buffer* bufferHandle, const void* data, uint dataSizeBytes, const std::string& bufferIdentifier)
 {
 	// Fill the staging buffer description
 	D3D11_BUFFER_DESC bufferDescription;
